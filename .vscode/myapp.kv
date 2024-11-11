@@ -1,0 +1,237 @@
+<MyScreenManager>:
+    StartScreen:
+    MainScreen:
+    StellplatzScreen:
+    VerwaltungsScreen:
+
+<StartScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 100, 50, 50]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 0, 0, 1, 1  # Blau
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: '/Users/juliafrancini/Documents/Bilder/Wohnmobil.png' # Pfad zum Bild 
+            size_hint: (1, 0.5)
+            keep_ratio: True
+            allow_stretch: True
+
+        Label:
+            text: 'Welcome to MyApp!'
+            font_size: 32
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            size_hint_y: None
+            height: self.texture_size[1]
+
+<MainScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 50, 50, 50]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 0, 0, 1, 1  # Blau
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'WoMo-App'
+            font_size: 48
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        Widget:
+            size_hint_y: None
+            height: 50
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (1, 0.5)
+            spacing: 20
+            padding: [0, 50, 0, 50]
+
+
+            Button:
+                text: 'Stellplatz'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+                on_press: app.root.current = 'stellplatz'
+
+            Button:
+                text: 'Verwaltung'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+                on_press: app.root.current = 'verwaltung'
+
+        Widget:
+            size_hint_y: None
+            height: 50
+
+<StellplatzScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 50, 50, 50]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 0, 0, 1, 1  # Blau
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'Stellplatz Details'
+            font_size: 32
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        TextInput:
+            hint_text: 'Bezeichnung'
+            font_size: 24
+            size_hint_y: None
+            height: 40
+
+        TextInput:
+            hint_text: 'GPS-Koordinaten'
+            font_size: 24
+            size_hint_y: None
+            height: 40
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 200
+
+            Label:
+                text: 'Bilder hinzufügen'
+                font_size: 24
+
+            Button:
+                text: 'Bild auswählen'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                CheckBox:
+                    id: checkbox_toilette
+                Label:
+                    text: 'Toilette'
+                    font_size: 24
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                CheckBox:
+                    id: checkbox_dusche
+                Label:
+                    text: 'Dusche'
+                    font_size: 24
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                CheckBox:
+                    id: checkbox_entsorgung
+                Label:
+                    text: 'Entsorgung'
+                    font_size: 24
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                CheckBox:
+                    id: checkbox_frischwasser
+                Label:
+                    text: 'Frischwasser'
+                    font_size: 24
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+
+            Button:
+                text: 'Zurück'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
+
+            Button:
+                text: 'Speichern'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+
+<VerwaltungsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 50, 50, 50]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 0, 0, 1, 1  # Blau
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 200
+
+            Button:
+                text: 'XML-Export'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+
+            Button:
+                text: 'Listen Verwalten'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+
+            Button:
+                text: 'Stellplatzeinträge'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+
+            Button:
+                text: 'Zurück'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
+
+            
+        
