@@ -24,7 +24,6 @@ class VerwaltungsScreen(Screen):
 class StellplatzverwaltungScreen(Screen):
     pass
 
-
 class MyScreenManager(ScreenManager):
     pass
 
@@ -35,7 +34,18 @@ class MyApp(App):
         sm.add_widget(MainScreen(name='main'))
         sm.add_widget(StellplatzScreen(name='stellplatz'))
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
+        sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         return sm
 
 if __name__ == "__main__":
     MyApp().run()
+    
+class verwaltung(App):
+        def build(self):
+            sm = MyScreenManager()
+            sm.add_widget(VerwaltungsScreen(name='verwaltung'))
+            sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
+            return sm
+        
+if __name__ == "verwaltung":
+    verwaltung().run()
