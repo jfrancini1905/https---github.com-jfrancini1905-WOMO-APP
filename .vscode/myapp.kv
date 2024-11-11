@@ -3,6 +3,7 @@
     MainScreen:
     StellplatzScreen:
     VerwaltungsScreen:
+    StellplatzverwaltungScreen:
 
 <StartScreen>:
     BoxLayout:
@@ -187,51 +188,3 @@
                 size_hint: (0.5, None)
                 height: 50
 
-<VerwaltungsScreen>:
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [50, 50, 50, 50]
-        spacing: 20
-
-        canvas.before:
-            Color:
-                rgba: 0, 0, 1, 1  # Blau
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint_y: None
-            height: 200
-
-            Button:
-                text: 'XML-Export'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-
-            Button:
-                text: 'Listen Verwalten'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-
-            Button:
-                text: 'Stellplatzeinträge'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-        BoxLayout:
-            orientation: 'horizontal'
-            spacing: 20
-
-            Button:
-                text: 'Zurück'
-                font_size: 24
-                size_hint: (0.5, None)
-                height: 50
-                on_press: app.root.current = 'main'
-
-            
-        
