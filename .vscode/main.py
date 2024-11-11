@@ -10,6 +10,8 @@ class StartScreen(Screen):
     def switch_to_main(self, dt):
         self.manager.current = 'main'
 
+#test
+
 class MainScreen(Screen):
     pass
 
