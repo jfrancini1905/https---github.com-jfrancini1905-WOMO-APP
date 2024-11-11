@@ -1,7 +1,9 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang import Builder
 from kivy.clock import Clock
 
+# Definiere die Screens
 class StartScreen(Screen):
     def on_enter(self):
         # Wechsel nach 3 Sekunden zur MainScreen
@@ -9,9 +11,6 @@ class StartScreen(Screen):
 
     def switch_to_main(self, dt):
         self.manager.current = 'main'
-
-#test
-
 class MainScreen(Screen):
     pass
 
@@ -24,28 +23,26 @@ class VerwaltungsScreen(Screen):
 class StellplatzverwaltungScreen(Screen):
     pass
 
+# Der ScreenManager, der die Screens verwaltet
 class MyScreenManager(ScreenManager):
     pass
 
 class MyApp(App):
     def build(self):
+        # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
         sm.add_widget(StellplatzScreen(name='stellplatz'))
+        return sm
+
+    def verwaltung(self):
+        # Verwaltungsbildschirm und Stellplatzverwaltung laden
+        Builder.load_file("verwaltung.kv")
+        sm = MyScreenManager()
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         return sm
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     MyApp().run()
-    
-class verwaltung(App):
-        def build(self):
-            sm = MyScreenManager()
-            sm.add_widget(VerwaltungsScreen(name='verwaltung'))
-            sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
-            return sm
-        
-if __name__ == "verwaltung":
-    verwaltung().run()
