@@ -5,7 +5,7 @@ from kivy.clock import Clock
 class StartScreen(Screen):
     def on_enter(self):
         # Wechsel nach 3 Sekunden zur MainScreen
-        Clock.schedule_once(self.switch_to_main, 3)
+        Clock.schedule_once(self.switch_to_main, 1)
 
     def switch_to_main(self, dt):
         self.manager.current = 'main'
