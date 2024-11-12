@@ -26,18 +26,21 @@
                 font_size: 24
                 size_hint_y: None
                 height: 50
+                on_press: app.root.current = 'export'
 
             Button:
                 text: 'Listen Verwalten'
                 font_size: 24
                 size_hint_y: None
                 height: 50
+                on_press: app.root.current = 'editList'
 
             Button:
                 text: 'Stellplatzeinträge'
                 font_size: 24
                 size_hint_y: None
                 height: 50
+                on_press: app.root.current ='editSE'
         BoxLayout:
             orientation: 'horizontal'
             spacing: 20
