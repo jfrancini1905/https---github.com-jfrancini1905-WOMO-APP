@@ -9,7 +9,7 @@ from kivy.uix.boxlayout import BoxLayout
 class StartScreen(Screen):
     def on_enter(self):
         # Wechsel nach 3 Sekunden zur MainScreen
-        Clock.schedule_once(self.switch_to_main, 1)
+        Clock.schedule_once(self.switch_to_main, 2)
 
     def switch_to_main(self, dt):
         self.manager.current = 'main'
@@ -36,19 +36,16 @@ class MyRootWidget(BoxLayout):
 class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
+        Builder.load_file("MyApp.kv")
+        Builder.load_file("verwaltung.kv")  # Verwaltungskv-Datei hier laden
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
         sm.add_widget(StellplatzScreen(name='stellplatz'))
-        return sm
-
-    def verwaltung(self):
-        # Verwaltungsbildschirm und Stellplatzverwaltung laden
-        Builder.load_file("verwaltung.kv")
-        sm = MyScreenManager()
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         return sm
 
 if __name__ == '__main__':
-    MyApp().run()
+    app = MyApp()
+    app.run()

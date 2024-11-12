@@ -1,13 +1,5 @@
-<MyScreenManager>:
-   StartScreen:
-    MainScreen:
-    StellplatzScreen:
-    VerwaltungsScreen:
-    StellplatzverwaltungScreen:
-    
-
-
 <VerwaltungsScreen>:
+    name: 'verwaltung'
     BoxLayout:
         orientation: 'vertical'
         padding: [50, 50, 50, 50]
@@ -15,7 +7,7 @@
 
         canvas.before:
             Color:
-                rgba: 0, 0, 1, 1  # Blau
+                rgba: 245/255, 245/255, 220/255, 1  # Beige
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -44,7 +36,8 @@
                 font_size: 24
                 size_hint_y: None
                 height: 50
-                on_press: app.root.current ='editSE'
+                on_press: app.root.current = 'Stellplatzeinträge'
+
         BoxLayout:
             orientation: 'horizontal'
             spacing: 20
@@ -57,6 +50,7 @@
                 on_press: app.root.current = 'main'
 
 <StellplatzverwaltungScreen>:
+    name: 'Stellplatzeinträge'
     BoxLayout:
         orientation: 'vertical'
         padding: [50, 50, 50, 50]
@@ -64,11 +58,9 @@
 
         canvas.before:
             Color:
-                rgba: 0, 0, 1, 1  # Blau
+                rgba: 245/255, 245/255, 220/255, 1  # Beige
             Rectangle:
                 pos: self.pos
                 size: self.size
 
-
-            
-        
+        # Weitere Widgets hier hinzufügen
