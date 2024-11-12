@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.clock import Clock
+from kivy.uix.boxlayout import BoxLayout
 
 # Test
 # Definiere die Screens
@@ -28,6 +29,10 @@ class StellplatzverwaltungScreen(Screen):
 class MyScreenManager(ScreenManager):
     pass
 
+class MyRootWidget(BoxLayout):
+    # Diese Methode wird über on_press aufgerufen
+    def speichern_in_db(self):
+        print("Button wurde gedrückt!")
 class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
