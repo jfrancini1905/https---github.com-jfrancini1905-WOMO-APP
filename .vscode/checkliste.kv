@@ -11,3 +11,48 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    text: 'Stützen eingefahren'
+                    font_size: 24
+                    color: 0, 0, 0, 1 # Schwarze Textfarbe
+                CheckBox:
+                    id: checkbox_stuetze
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    text: 'Markise eingefahren'
+                    font_size: 24
+                    color: 0, 0, 0, 1 # Schwarze Textfarbe
+                CheckBox:
+                    id: checkbox_markise
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    text: 'Trittstufe eingefahren'
+                    font_size: 24
+                    color: 0, 0, 0, 1 # Schwarze Textfarbe
+                CheckBox:
+                    id: checkbox_trittstufe
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+
+            Button:
+                text: 'Zurück'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
