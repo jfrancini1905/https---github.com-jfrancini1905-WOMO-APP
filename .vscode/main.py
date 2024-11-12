@@ -32,18 +32,11 @@ class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
         Builder.load_file("MyApp.kv")
+        Builder.load_file("verwaltung.kv")  # Verwaltungskv-Datei hier laden
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
         sm.add_widget(StellplatzScreen(name='stellplatz'))
-        sm.add_widget(VerwaltungsScreen(name='verwaltung'))
-        sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
-        return sm
-
-    def verwaltung(self):
-        # Verwaltungsbildschirm und Stellplatzverwaltung laden
-        Builder.load_file("verwaltung.kv")
-        sm = MyScreenManager()
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         return sm
