@@ -2,6 +2,7 @@
     StartScreen:
     MainScreen:
     StellplatzScreen:
+    ChecklistScreen:
     VerwaltungsScreen:
     StellplatzverwaltungScreen:
 
@@ -19,7 +20,7 @@
                 size: self.size
 
         Label:
-            text: 'Willkommen in der WoMo!'
+            text: 'Willkommen in der WoMo-App!'
             font_size: 32
             color: 0, 0, 0, 1  # Schwarze Textfarbe
             halign: 'center'
@@ -64,6 +65,13 @@
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'stellplatz'
+            
+            Button:
+                text: 'Checkliste'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+                on_press: app.root.current = 'checkliste'
 
             Button:
                 text: 'Verwaltung'
