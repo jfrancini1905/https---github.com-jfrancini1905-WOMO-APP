@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.clock import Clock
 
+# Test
 # Definiere die Screens
 class StartScreen(Screen):
     def on_enter(self):
