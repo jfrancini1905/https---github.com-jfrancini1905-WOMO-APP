@@ -31,10 +31,13 @@ class MyScreenManager(ScreenManager):
 class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
+        Builder.load_file("MyApp.kv")
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
         sm.add_widget(StellplatzScreen(name='stellplatz'))
+        sm.add_widget(VerwaltungsScreen(name='verwaltung'))
+        sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         return sm
 
     def verwaltung(self):
@@ -46,4 +49,5 @@ class MyApp(App):
         return sm
 
 if __name__ == '__main__':
-    MyApp().run()
+    app = MyApp()
+    app.run()

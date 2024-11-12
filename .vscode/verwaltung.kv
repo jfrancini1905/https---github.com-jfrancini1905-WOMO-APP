@@ -1,13 +1,30 @@
 <MyScreenManager>:
-   StartScreen:
+    StartScreen:
     MainScreen:
     StellplatzScreen:
     VerwaltungsScreen:
     StellplatzverwaltungScreen:
-    
 
+<StartScreen>:
+    name: 'start'
+    BoxLayout:
+        orientation: 'vertical'
+        # Weitere Widgets hier hinzufügen
+
+<MainScreen>:
+    name: 'main'
+    BoxLayout:
+        orientation: 'vertical'
+        # Weitere Widgets hier hinzufügen
+
+<StellplatzScreen>:
+    name: 'stellplatz'
+    BoxLayout:
+        orientation: 'vertical'
+        # Weitere Widgets hier hinzufügen
 
 <VerwaltungsScreen>:
+    name: 'verwaltung'
     BoxLayout:
         orientation: 'vertical'
         padding: [50, 50, 50, 50]
@@ -44,7 +61,8 @@
                 font_size: 24
                 size_hint_y: None
                 height: 50
-                on_press: app.root.current ='editSE'
+                on_press: app.root.current = 'Stellplatzeinträge'
+
         BoxLayout:
             orientation: 'horizontal'
             spacing: 20
@@ -57,6 +75,7 @@
                 on_press: app.root.current = 'main'
 
 <StellplatzverwaltungScreen>:
+    name: 'Stellplatzeinträge'
     BoxLayout:
         orientation: 'vertical'
         padding: [50, 50, 50, 50]
@@ -68,6 +87,8 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+        # Weitere Widgets hier hinzufügen
+
 
 
             
