@@ -21,8 +21,8 @@ def create_table(conn):
     conn.commit()
 
 # Eintrag hinzufügen
-def add_entry(conn, title, description):
-    query = "INSERT INTO entries (title, description) VALUES (?, ?);"
+def add_entry(conn, title, location, checklist, description):
+    query = f"INSERT INTO entries (title, location, checklist, description) VALUES ({title}, {location}, {checklist}, {description} );"
     conn.execute(query, (title, description))
     conn.commit()
     close_connection(conn)
@@ -35,14 +35,14 @@ def get_all_entries(conn):
 
 # Eintrag aktualisieren
 def update_entry(conn, entry_id, title, description):
-    query = "UPDATE entries SET title = ?, description = ? WHERE id = ?;"
+    query = f"UPDATE entries SET title = {title}, description = {description}, TIMESTAMP = CURRENT_TIMESTAMP WHERE id = {entry_id};"
     conn.execute(query, (title, description, entry_id))
     conn.commit()
-     close_connection(conn)
+    close_connection(conn)
 
 # Eintrag löschen
 def delete_entry(conn, entry_id):
-    query = "DELETE FROM entries WHERE id = ?;"
+    query = f"DELETE FROM entries WHERE id = {entry_id};"
     conn.execute(query, (entry_id,))
     conn.commit()
     close_connection(conn)
