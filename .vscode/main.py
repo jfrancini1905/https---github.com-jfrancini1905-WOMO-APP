@@ -9,7 +9,7 @@ import dbscript
 # Definiere die Screens
 class StartScreen(Screen):
     def on_enter(self):
-        # Wechsel nach 3 Sekunden zur MainScreen
+        # Wechsel nach 2 Sekunden zur MainScreen
         Clock.schedule_once(self.switch_to_main, 2)
 
     def switch_to_main(self, dt):
@@ -35,10 +35,9 @@ class MyScreenManager(ScreenManager):
 
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
-        dbscript.add_entry(self.title.text, self.description.text)
+        dbscript.add_entry(self.ids.Bezeichnung.text,self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
         
-        
-        
+
         
 class MyApp(App):
     def build(self):

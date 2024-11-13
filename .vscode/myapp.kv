@@ -104,12 +104,14 @@
             height: self.texture_size[1]
 
         TextInput:
+            id: Bezeichnung
             hint_text: 'Bezeichnung'
             font_size: 24
             size_hint_y: None
             height: 40
 
         TextInput:
+            id: GPS-Koordinaten
             hint_text: 'GPS-Koordinaten'
             font_size: 24
             size_hint_y: None
@@ -190,7 +192,7 @@
                 font_size: 24
                 size_hint: (0.5, None)
                 height: 50
-                on_press: root.speichern_in_db(Bezeichnung.content,)
+                on_press: root.speichern_in_db(self)
 
 <VerwaltungsScreen>:
     name: 'verwaltung'
