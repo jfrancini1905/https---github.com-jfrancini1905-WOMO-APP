@@ -1,0 +1,22 @@
+<MyScreenManager>:
+    StartScreen:
+    MainScreen:
+    StellplatzScreen:
+    ChecklistScreen:
+    VerwaltungsScreen:
+    StellplatzverwaltungScreen:
+    CameraScreen:
+
+<CameraScreen>:
+    BoxLayout:
+            orientation: 'vertical'
+            size_hint: (1, 0.5)
+            spacing: 20
+            padding: [0, 50, 0, 50]
+
+        Button:
+                text: 'zurück'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+                on_press: app.root.current = 'Stellplatzscreen'

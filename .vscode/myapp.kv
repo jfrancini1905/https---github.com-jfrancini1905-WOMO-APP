@@ -81,12 +81,7 @@
                 height: 50
                 on_press: app.root.current = 'verwaltung'
 
-            Button:
-                text: 'Kamera'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'camera'
+           
 
         Widget:
             size_hint_y: None
@@ -130,15 +125,13 @@
             size_hint_y: None
             height: 200
 
-           # Camera:
-            #    id: Camera
-             #   resolution: 399, 299
+            Button:
+                text: 'Kamera'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+                on_press: app.root.current = 'camera'
 
-            #BoxLayout:
-             #   orientation: 'horizontal'
-              #  size_hint_y: Noneheight: '48dp'
-
-            
             
             Label:
                 text: 'Bilder hinzufügen'

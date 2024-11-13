@@ -32,9 +32,12 @@ class VerwaltungsScreen(Screen):
 class StellplatzverwaltungScreen(Screen):
     pass
 
+class CameraScreen(Screen):
+    pass
 # Der ScreenManager, der die Screens verwaltet
 class MyScreenManager(ScreenManager):
     pass
+
 
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
