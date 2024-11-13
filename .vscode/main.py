@@ -1,9 +1,10 @@
+from camera import AndroidCamera
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.camera import Camera
 import dbscript
 
 # Test
@@ -37,7 +38,6 @@ class MyScreenManager(ScreenManager):
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
         dbscript.add_entry(self.title.text, self.description.text)
-        
         
         
         
