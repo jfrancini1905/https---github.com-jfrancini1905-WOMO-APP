@@ -10,9 +10,16 @@ class CameraScreen(Screen):
         super(CameraScreen, self).__init__(**kwargs)
         layout = FloatLayout()
 
-        self.camera = Camera(play=True, resolution=(640, 480), size_hint=(1, 0.8), pos_hint={'x': 0, 'y': 0.2})
+        # Kamera erstellen, aber nicht starten
+        self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8), pos_hint={'x': 0, 'y': 0.2})
         layout.add_widget(self.camera)
 
+        # Button um die Kamera zu starten
+        start_button = Button(text="Start Camera", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0.8})
+        start_button.bind(on_press=self.start_camera)
+        layout.add_widget(start_button)
+
+        # Capture Button
         capture_button = Button(text="Capture", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0})
         capture_button.bind(on_press=self.capture)
         layout.add_widget(capture_button)
@@ -33,6 +40,11 @@ class CameraScreen(Screen):
     def update_shape(self, instance, value):
         self.ellipse.pos = instance.pos
         self.ellipse.size = instance.size
+
+    def start_camera(self, instance):
+        # Die Kamera starten
+        self.camera.play = True
+        print("Kamera gestartet")
 
     def capture(self, instance):
         self.camera.export_to_png("captured_image.png")
