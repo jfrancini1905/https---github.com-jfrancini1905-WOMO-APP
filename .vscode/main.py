@@ -3,6 +3,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
+from camera import CameraScreen
+
 import dbscript
 
 # Test
@@ -14,6 +16,7 @@ class StartScreen(Screen):
 
     def switch_to_main(self, dt):
         self.manager.current = 'main'
+
 class MainScreen(Screen):
     pass
 
@@ -52,6 +55,7 @@ class MyApp(App):
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         sm.add_widget(ChecklistScreen(name='checkliste'))
+        sm.add_widget(CameraScreen(name='camera'))
         return sm
 
 if __name__ == '__main__':
