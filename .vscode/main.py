@@ -1,5 +1,9 @@
 import kivy
 kivy.parse_kivy_version('1.11.0')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 857540f (Aktuelle Version)
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
