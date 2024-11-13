@@ -38,7 +38,7 @@ def update_entry(conn, entry_id, title, description):
     query = "UPDATE entries SET title = ?, description = ? WHERE id = ?;"
     conn.execute(query, (title, description, entry_id))
     conn.commit()
-     close_connection(conn)
+    close_connection(conn)
 
 # Eintrag löschen
 def delete_entry(conn, entry_id):
