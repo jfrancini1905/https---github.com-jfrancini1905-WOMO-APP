@@ -5,6 +5,7 @@
     ChecklistScreen:
     VerwaltungsScreen:
     StellplatzverwaltungScreen:
+    CameraScreen:
 
 <StartScreen>:
     BoxLayout:
@@ -79,6 +80,13 @@
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'verwaltung'
+
+            Button:
+                text: 'Kamera'
+                font_size: 24
+                size_hint_y: None
+                height: 50
+                on_press: app.root.current = 'camera'
 
         Widget:
             size_hint_y: None
@@ -268,3 +276,6 @@
                 size: self.size
 
         # Weitere Widgets hier hinzufügen
+
+<CameraScreen>:
+    name: 'camera'

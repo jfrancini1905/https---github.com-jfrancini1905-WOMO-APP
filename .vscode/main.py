@@ -1,10 +1,10 @@
-from camera import AndroidCamera
-
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
+from camera import CameraScreen
+
 import dbscript
 
 # Test
@@ -16,6 +16,7 @@ class StartScreen(Screen):
 
     def switch_to_main(self, dt):
         self.manager.current = 'main'
+
 class MainScreen(Screen):
     pass
 
@@ -38,9 +39,7 @@ class MyScreenManager(ScreenManager):
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
         dbscript.add_entry(self.title.text, self.description.text)
-        
-        
-        
+
 class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
@@ -54,6 +53,7 @@ class MyApp(App):
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         sm.add_widget(ChecklistScreen(name='checkliste'))
+        sm.add_widget(CameraScreen(name='camera'))
         return sm
 
 if __name__ == '__main__':
