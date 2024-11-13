@@ -1,4 +1,8 @@
 import kivy
+<<<<<<< HEAD
+=======
+kivy.parse_kivy_version('1.11.0')
+>>>>>>> 31afcde (Aktuelle Kivy Version)
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
@@ -45,7 +49,6 @@ class MyRootWidget(BoxLayout):
         dbscript.add_entry(self.ids.Bezeichnung.text,self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
         
 
-        
 class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)

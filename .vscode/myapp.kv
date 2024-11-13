@@ -1,3 +1,4 @@
+#:kivy 1.11.0
 <MyScreenManager>:
     StartScreen:
     MainScreen:
@@ -66,7 +67,7 @@
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'stellplatz'
-            
+
             Button:
                 text: 'Checkliste'
                 font_size: 24
@@ -80,8 +81,6 @@
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'verwaltung'
-
-           
 
         Widget:
             size_hint_y: None
@@ -132,7 +131,6 @@
                 height: 50
                 on_press: app.root.current = 'camera'
 
-            
             Label:
                 text: 'Bilder hinzufügen'
                 font_size: 24
