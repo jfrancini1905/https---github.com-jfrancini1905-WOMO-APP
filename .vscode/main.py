@@ -44,7 +44,9 @@ class MyScreenManager(ScreenManager):
 
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
-        conn = dbscript.create_connection(entries.db)
+        # Speichern der Daten in der Datenbank
+        entries = "entries.db"
+        conn = dbscript.create_connection(entries)
         dbscript.add_entry(conn,self.ids.Bezeichnung.text,self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
         
 
@@ -61,8 +63,26 @@ class MyApp(App):
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         sm.add_widget(ChecklistScreen(name='checkliste'))
-        sm.add_widget(CameraScreen(name='camera'))
+        #sm.add_widget(CameraScreen(name='camera'))
         return sm
+    def add_more_options(self, checkbox_list):
+        new_option = BoxLayout(orientation='horizontal')
+        new_checkbox = CheckBox()
+        new_label = Label(text='Neue Option', font_size=24)
+        new_option.add_widget(new_checkbox)
+        new_option.add_widget(new_label)
+        checkbox_list.add_widget(new_option)
+    def get_checkbox_states(self, checkbox_list):
+        states = {}
+        for item in checkbox_list.children:
+            if isinstance(item, BoxLayout):
+                checkbox = item.children[1]  # Checkbox ist das zweite Kind im Layout
+                label = item.children[0]     # Label ist das erste Kind im Layout
+                if isinstance(checkbox, CheckBox) and isinstance(label, Label):
+                    states[label.text] = checkbox.active  # True oder False für aktiv/inaktiv
+        return states
+
+
 
 if __name__ == '__main__':
     app = MyApp()

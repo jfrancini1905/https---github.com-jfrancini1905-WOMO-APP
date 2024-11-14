@@ -141,50 +141,61 @@
                 size_hint_y: None
                 height: 50
 
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
 
-        BoxLayout:
-            orientation: 'vertical'
-            spacing: 10
+        ScrollView:
+            size_hint: (2, None)
+            height: 300
 
-            BoxLayout:
-                orientation: 'horizontal'
+            GridLayout:
+                id: checkbox_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
 
-                CheckBox:
-                    id: checkbox_toilette
-                Label:
-                    text: 'Toilette'
-                    font_size: 24
+                # Initiale Optionen
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        id: checkbox_toilette
+                    Label:
+                        text: 'Toilette'
+                        font_size: 24
 
-            BoxLayout:
-                orientation: 'horizontal'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        id: checkbox_dusche
+                    Label:
+                        text: 'Dusche'
+                        font_size: 24
 
-                CheckBox:
-                    id: checkbox_dusche
-                Label:
-                    text: 'Dusche'
-                    font_size: 24
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        id: checkbox_entsorgung
+                    Label:
+                        text: 'Entsorgung'
+                        font_size: 24
 
-            BoxLayout:
-                orientation: 'horizontal'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        id: checkbox_frischwasser
+                    Label:
+                        text: 'Frischwasser'
+                        font_size: 24
 
-                CheckBox:
-                    id: checkbox_entsorgung
-                Label:
-                    text: 'Entsorgung'
-                    font_size: 24
+            Button:
+                text: "Mehr Optionen anzeigen"
+                size_hint_y: None
+                height: 50
+                on_release:
+                    app.add_more_options(checkbox_list)
 
-            BoxLayout:
-                orientation: 'horizontal'
-
-                CheckBox:
-                    id: checkbox_frischwasser
-                Label:
-                    text: 'Frischwasser'
-                    font_size: 24
-
-        BoxLayout:
-            size_hint_y: None
-            height: 50
 
         BoxLayout:
             orientation: 'horizontal'
