@@ -13,7 +13,7 @@ def create_table(conn):
         title TEXT NOT NULL,
         location TEXT NOT NULL,
         checklist Text NOT NULL,
-        description TEXT,
+        picture BLOB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """
@@ -22,7 +22,7 @@ def create_table(conn):
 
 # Eintrag hinzufügen
 def add_entry(conn, title, location, checklist, description):
-    query = f"INSERT INTO entries (title, location, checklist, description) VALUES ({title}, {location}, {checklist}, {description} );"
+    query = f"INSERT INTO entries (title, location, checklist, description) VALUES ({title}, {location}, {checklist} );"
     conn.execute(query, (title, description))
     conn.commit()
    

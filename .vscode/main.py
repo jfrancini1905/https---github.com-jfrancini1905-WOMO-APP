@@ -44,7 +44,8 @@ class MyScreenManager(ScreenManager):
 
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
-        dbscript.add_entry(self.ids.Bezeichnung.text,self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
+        conn = dbscript.create_connection(entries.db)
+        dbscript.add_entry(conn,self.ids.Bezeichnung.text,self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
         
 
 class MyApp(App):
