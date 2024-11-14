@@ -1,6 +1,5 @@
 import kivy
 kivy.parse_kivy_version('1.11.0')
-
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
