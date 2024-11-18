@@ -51,8 +51,9 @@ class MyScreenManager(ScreenManager):
     pass
 
 class MyRootWidget(BoxLayout):
-    def speichern_in_db(self):
+    def speichern_in_db(self, checkbox_list):
         # Speichern der Daten in der Datenbank
+        get_checkbox_states = self.get_checkbox_states(checkbox_list)
         entries = "entries.db"
         conn = dbscript.create_connection(entries)
         dbscript.add_entry(conn, self.ids.Bezeichnung.text, self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
