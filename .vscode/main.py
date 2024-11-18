@@ -10,6 +10,8 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
+from kivy.uix.popup import Popup
+from kivy.uix.textinput import TextInput
 
 # Importiere die CameraScreen-Klasse, falls vorhanden
 from camera import CameraScreen
@@ -89,14 +91,62 @@ class MyApp(App):
         sm.add_widget(CameraScreen(name='camera'))
         return sm
 
-    def add_more_options(self, checkbox_list):
-        new_option = BoxLayout(orientation='horizontal')
+    def show_popup(self, checkbox_list):
+        # Layout für das Popup
+        popup_layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+
+        # TextInput für die Eingabe
+        text_input = TextInput(hint_text="Gib den Text für das Label ein", size_hint_y=None, height=50)
+
+        # Button zum Hinzufügen
+        confirm_button = Button(
+            text="Hinzufügen",
+            size_hint_y=None,
+            height=50,
+            on_release=lambda btn: self.add_more_options(checkbox_list, text_input.text, popup)
+        )
+
+        # Elemente zum Popup-Layout hinzufügen
+        popup_layout.add_widget(Label(text="Gib einen Text ein:"))
+        popup_layout.add_widget(text_input)
+        popup_layout.add_widget(confirm_button)
+
+        # Popup erstellen
+        popup = Popup(
+            title="Neue Option hinzufügen",
+            content=popup_layout,
+            size_hint=(0.8, 0.4),  # Größe des Popups (Breite, Höhe)
+            auto_dismiss=False  # Schließt sich nicht automatisch
+        )
+
+        # Popup anzeigen
+        popup.open()
+
+    def add_more_options(self, checkbox_list, label_text, popup):
+        # Text prüfen
+        if not label_text.strip():
+            label_text = f"Option {len(checkbox_list.children) + 1}"
+
+        # Neues BoxLayout erstellen
+        new_option = BoxLayout(
+            orientation='horizontal',
+            size_hint_y=None,
+            height=50,
+            spacing=10
+        )
+
+        # Checkbox und Label hinzufügen
         new_checkbox = CheckBox()
-        new_label = Label(text='Neue Option', font_size=24)
+        new_label = Label(text=label_text, font_size=24)
+
         new_option.add_widget(new_checkbox)
         new_option.add_widget(new_label)
+
+        # Neues Element zur Liste hinzufügen
         checkbox_list.add_widget(new_option)
 
+        # Popup schließen
+        popup.dismiss()
     def get_checkbox_states(self, checkbox_list):
         states = {}
         for item in checkbox_list.children:

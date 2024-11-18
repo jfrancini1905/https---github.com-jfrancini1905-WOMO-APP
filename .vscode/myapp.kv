@@ -157,13 +157,14 @@
                 cols: 1
                 size_hint_y: None
                 height: self.minimum_height
-                spacing: 10
+                spacing: 20
 
                 # Initialer Inhalt
                 BoxLayout:
                     orientation: 'horizontal'
                     size_hint_y: None
                     height: 50
+                    spacing: 10
                     CheckBox:
                     Label:
                         text: "Toilette"
@@ -173,6 +174,7 @@
                     orientation: 'horizontal'
                     size_hint_y: None
                     height: 50
+                    spacing: 10
                     CheckBox:
                     Label:
                         text: "Dusche"
@@ -182,7 +184,7 @@
             text: "Mehr Optionen anzeigen"
             size_hint_y: None
             height: 50
-            on_release: app.add_more_options(checkbox_list)
+            on_release: app.show_popup(checkbox_list)
 
 
     BoxLayout:
