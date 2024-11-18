@@ -9,6 +9,7 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.widget import Widget
 
 # Importiere die CameraScreen-Klasse, falls vorhanden
 from camera import CameraScreen
@@ -18,7 +19,6 @@ from kivy.uix.checkbox import CheckBox
 
 import dbscript
 
-# Test
 # Definiere die Screens
 class StartScreen(Screen):
     def on_enter(self):
@@ -56,7 +56,7 @@ class MyRootWidget(BoxLayout):
         entries = "entries.db"
         conn = dbscript.create_connection(entries)
         dbscript.add_entry(conn, self.ids.Bezeichnung.text, self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
-        
+
 class CustomScrollView(ScrollView):
     def __init__(self, **kwargs):
         super(CustomScrollView, self).__init__(**kwargs)
@@ -66,7 +66,11 @@ class CustomScrollView(ScrollView):
 
     def add_widget(self, widget, *args, **kwargs):
         self.container.add_widget(widget, *args, **kwargs)
+        self._trigger_update_from_scroll()
 
+    def remove_widget(self, widget, *args, **kwargs):
+        self.container.remove_widget(widget, *args, **kwargs)
+        self._trigger_update_from_scroll()
 
 class MyApp(App):
     def build(self):
@@ -101,10 +105,6 @@ class MyApp(App):
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
                     states[label.text] = checkbox.active  # True oder False für aktiv/inaktiv
         return states
-    
-    
-
-        
 
 if __name__ == '__main__':
     app = MyApp()
