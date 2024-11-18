@@ -1,66 +1,62 @@
 #:kivy 1.11.0
 
-<MyScreenManager>:
-    StartScreen:
-    MainScreen:
-    StellplatzScreen:
-    ChecklistScreen:
-    VerwaltungsScreen:
-    StellplatzverwaltungScreen:
-    CameraScreen:
-
-
-
 <VerwaltungsScreen>:
     name: 'verwaltung'
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [50, 50, 50, 50]
-        spacing: 20
-
-        canvas.before:
-            Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
+    ScrollView:
         BoxLayout:
             orientation: 'vertical'
-            size_hint_y: None
-            height: 200
-
-            Button:
-                text: 'XML-Export'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'export'
-
-            Button:
-                text: 'Listen Verwalten'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'editList'
-
-            Button:
-                text: 'Stellplatzeinträge'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'Stellplatzeinträge'
-
-        BoxLayout:
-            orientation: 'horizontal'
+            padding: [50, 50, 50, 50]
             spacing: 20
+            size_hint_y: None
+            height: self.minimum_height
 
-            Button:
-                text: 'Zurück'
-                font_size: 24
-                size_hint: (0.5, None)
+            canvas.before:
+                Color:
+                    rgba: 245/255, 245/255, 220/255, 1  # Beige
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+                Button:
+                    text: 'XML-Export'
+                    font_size: 24
+                    size_hint_y: None
+                    height: 50
+                    on_press: app.root.current = 'export'
+
+                Button:
+                    text: 'Listen Verwalten'
+                    font_size: 24
+                    size_hint_y: None
+                    height: 50
+                    on_press: app.root.current = 'editList'
+
+                Button:
+                    text: 'Stellplatzeinträge'
+                    font_size: 24
+                    size_hint_y: None
+                    height: 50
+                    on_press: app.root.current = 'Stellplatzeinträge'
+
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 20
+                size_hint_y: None
                 height: 50
-                on_press: app.root.current = 'main'
+
+                Button:
+                    text: 'Zurück'
+                    font_size: 24
+                    size_hint_y: None
+                    height: 50
+                    on_press: app.root.current = 'main'
+
+
 
 <StellplatzverwaltungScreen>:
     name: 'Stellplatzeinträge'

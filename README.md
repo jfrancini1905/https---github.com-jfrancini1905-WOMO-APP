@@ -3,4 +3,6 @@
   # Kamera implementieren
   # Emulator aufsetzen in Android Studio
   # Emulator einbinden
+  # Scrollview einbinden ist sehr schwer
+  # ScrollView ausführen ist schwierig 
 
