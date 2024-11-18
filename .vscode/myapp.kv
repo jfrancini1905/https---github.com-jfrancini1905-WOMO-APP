@@ -368,40 +368,4 @@
 
 <CameraScreen>:
     name: 'camera'
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [50, 50, 50, 50]
-        spacing: 20
-
-        canvas.before:
-            Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
-        Label:
-            text: 'Kamera'
-            font_size: 32
-            size_hint_y: None
-            height: self.texture_size[1]
-
-        # Hier können Sie Kamera-Widgets und die Kamerasteuerung hinzufügen
-
-        Widget:
-            size_hint_y: None
-            height: 20
-
-        Button:
-            text: 'Zurück'
-            font_size: 24
-            size_hint_y: None
-            height: 50
-            on_press: app.root.current = 'stellplatz'
-
-        Button:
-            text: 'Bild aufnehmen'
-            font_size: 24
-            size_hint_y: None
-            height: 50
-            on_press: app.capture_image()
+   
