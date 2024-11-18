@@ -1,7 +1,5 @@
 #:kivy 1.11.0
 
-
-
 <MyScreenManager>:
     StartScreen:
     MainScreen:
@@ -34,6 +32,17 @@
             size_hint_y: None
             height: self.texture_size[1]
 
+        Widget:
+            size_hint_y: None
+            height: 20
+
+        Button:
+            text: 'Weiter'
+            font_size: 24
+            size_hint_y: None
+            height: 50
+            on_press: app.root.current = 'main'
+
 <MainScreen>:
     BoxLayout:
         orientation: 'vertical'
@@ -50,7 +59,7 @@
         Label:
             text: 'WoMo-App'
             font_size: 48
-            color: 0, 0, 0, 1 # Schwarze Textfarbe
+            color: 0, 0, 0, 1  # Schwarze Textfarbe
             size_hint_y: None
             height: self.texture_size[1]
 
@@ -116,7 +125,7 @@
             height: 40
 
         TextInput:
-            id: GPS-Koordinaten
+            id: GPS_Koordinaten
             hint_text: 'GPS-Koordinaten'
             font_size: 24
             size_hint_y: None
@@ -126,6 +135,7 @@
             orientation: 'vertical'
             size_hint_y: None
             height: 200
+            spacing: 20
 
             Button:
                 text: 'Kamera'
@@ -144,6 +154,7 @@
                 size_hint_y: None
                 height: 50
 
+<<<<<<< HEAD
     BoxLayout:
         orientation: 'vertical'
         spacing: 10
@@ -218,32 +229,57 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+=======
+        Widget:
+            size_hint_y: None
+            height: 20
+>>>>>>> 050cf56 (Ordentliches Layout auf zwei Seiten und Kamera)
 
         BoxLayout:
             orientation: 'vertical'
+            spacing: 10
+
+            ScrollView:
+                size_hint: (1, None)
+                height: 300
+
+                GridLayout:
+                    id: checkbox_list
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+                    # Initialer Inhalt
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        CheckBox:
+                        Label:
+                            text: "Toilette"
+                            font_size: 24
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        CheckBox:
+                        Label:
+                            text: "Dusche"
+                            font_size: 24
+
+            Button:
+                text: "Mehr Optionen anzeigen"
+                size_hint_y: None
+                height: 50
+                on_release: app.add_more_options(checkbox_list)
+
+        Widget:
             size_hint_y: None
-            height: 200
-
-            Button:
-                text: 'XML-Export'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'export'
-
-            Button:
-                text: 'Listen Verwalten'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'editList'
-
-            Button:
-                text: 'Stellplatzeinträge'
-                font_size: 24
-                size_hint_y: None
-                height: 50
-                on_press: app.root.current = 'Stellplatzeinträge'
+            height: 20
 
         BoxLayout:
             orientation: 'horizontal'
@@ -255,6 +291,13 @@
                 size_hint: (0.5, None)
                 height: 50
                 on_press: app.root.current = 'main'
+
+            Button:
+                text: 'Speichern'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: root.speichern_in_db(checkbox_list)
 
 <StellplatzverwaltungScreen>:
     name: 'Stellplatzeinträge'
@@ -270,7 +313,95 @@
                 pos: self.pos
                 size: self.size
 
-       
+        Label:
+            text: 'Stellplatzeinträge'
+            font_size: 32
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        ScrollView:
+            size_hint: (1, None)
+            height: 300
+
+            GridLayout:
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+                # Beispiel-Einträge
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 50
+                    spacing: 10
+                    Label:
+                        text: "Eintrag 1"
+                        font_size: 24
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 50
+                    spacing: 10
+                    Label:
+                        text: "Eintrag 2"
+                        font_size: 24
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+
+            Button:
+                text: 'Zurück'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
+
+            Button:
+                text: 'Neuer Eintrag'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'stellplatz'
 
 <CameraScreen>:
     name: 'camera'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 50, 50, 50]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 245/255, 245/255, 220/255, 1  # Beige
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'Kamera'
+            font_size: 32
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        # Hier können Sie Kamera-Widgets und die Kamerasteuerung hinzufügen
+
+        Widget:
+            size_hint_y: None
+            height: 20
+
+        Button:
+            text: 'Zurück'
+            font_size: 24
+            size_hint_y: None
+            height: 50
+            on_press: app.root.current = 'stellplatz'
+
+        Button:
+            text: 'Bild aufnehmen'
+            font_size: 24
+            size_hint_y: None
+            height: 50
+            on_press: app.capture_image()

@@ -1,29 +1,35 @@
 #:kivy 1.11.0
 <ChecklistScreen>:
     name: 'checkliste'
-    CustomScrollView:
-        BoxLayout:
-            orientation: 'vertical'
-            padding: [50, 50, 50, 50]
-            spacing: 20
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 50, 50, 50]
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: 245/255, 245/255, 220/255, 1  # Beige
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: 'Checkliste'
+            font_size: 32
             size_hint_y: None
-            height: self.minimum_height
+            height: self.texture_size[1]
 
-            canvas.before:
-                Color:
-                    rgba: 245/255, 245/255, 220/255, 1  # Beige
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-
+        CustomScrollView:
             BoxLayout:
                 orientation: 'vertical'
-                spacing: 10
+                padding: [0, 50, 0, 50]
+                spacing: 20
                 size_hint_y: None
                 height: self.minimum_height
 
                 BoxLayout:
                     orientation: 'horizontal'
+                    spacing: 10
                     Label:
                         text: 'Stützen eingefahren'
                         font_size: 24
@@ -33,6 +39,7 @@
 
                 BoxLayout:
                     orientation: 'horizontal'
+                    spacing: 10
                     Label:
                         text: 'Markise eingefahren'
                         font_size: 24
@@ -42,6 +49,7 @@
 
                 BoxLayout:
                     orientation: 'horizontal'
+                    spacing: 10
                     Label:
                         text: 'Trittstufe eingefahren'
                         font_size: 24
@@ -52,8 +60,7 @@
             BoxLayout:
                 orientation: 'horizontal'
                 spacing: 20
-                size_hint_y: None
-                height: 50
+                height: self.minimum_height
 
                 Button:
                     text: 'Zurück'
@@ -61,3 +68,11 @@
                     size_hint_y: None
                     height: 50
                     on_press: app.root.current = 'main'
+
+                Button:
+                    text: 'Speichern'
+                    font_size: 24
+                    size_hint_y: None
+                    height: 50
+                    on_press: root.speichern_in_db(checkbox_list)
+

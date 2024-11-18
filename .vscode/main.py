@@ -53,12 +53,9 @@ class MyScreenManager(ScreenManager):
     pass
 
 class MyRootWidget(BoxLayout):
-<<<<<<< HEAD
+
     def speichern_in_db(self, checkbox_list):
-=======
-    def speichern_in_db(self):
         name = "speichern_in_db"
->>>>>>> a14a85f (FUnktioniert ist aber schlechtes Design)
         # Speichern der Daten in der Datenbank
         get_checkbox_states = self.get_checkbox_states(checkbox_list)
         entries = "entries.db"
