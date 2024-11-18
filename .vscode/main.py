@@ -10,9 +10,13 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
+<<<<<<< HEAD
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 
+=======
+from kivy.uix.image import Image
+>>>>>>> 69b06ce (Kamera Fix)
 # Importiere die CameraScreen-Klasse, falls vorhanden
 from camera import CameraScreen
 from kivy.uix.button import Button
@@ -53,7 +57,9 @@ class MyScreenManager(ScreenManager):
     pass
 
 class MyRootWidget(BoxLayout):
+
     def speichern_in_db(self, checkbox_list):
+        name = "speichern_in_db"
         # Speichern der Daten in der Datenbank
         get_checkbox_states = self.get_checkbox_states(checkbox_list)
         entries = "entries.db"
