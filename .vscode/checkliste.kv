@@ -4,11 +4,11 @@
     BoxLayout:
         orientation: 'vertical'
         padding: [50, 50, 50, 50]
-        spacing: 20
+        spacing: 30  # Mehr Abstand zwischen den Boxen
 
         canvas.before:
             Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
+                rgba: 245/255, 245/255, 220/255, 1  # Beige Hintergrundfarbe
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -18,18 +18,19 @@
             font_size: 32
             size_hint_y: None
             height: self.texture_size[1]
+            color: 0, 0, 0, 1  # Schwarze Textfarbe
 
         CustomScrollView:
             BoxLayout:
                 orientation: 'vertical'
-                padding: [0, 50, 0, 50]
-                spacing: 20
+                padding: [0, 30, 0, 30]  # Mehr Padding oben und unten
+                spacing: 20  # Abstand zwischen den Checkboxen
                 size_hint_y: None
                 height: self.minimum_height
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 10
+                    spacing: 15  # Abstand zwischen Text und Checkbox
                     Label:
                         text: 'Stützen eingefahren'
                         font_size: 24
@@ -39,7 +40,7 @@
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 10
+                    spacing: 15
                     Label:
                         text: 'Markise eingefahren'
                         font_size: 24
@@ -49,7 +50,7 @@
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 10
+                    spacing: 15
                     Label:
                         text: 'Trittstufe eingefahren'
                         font_size: 24
@@ -59,8 +60,9 @@
 
             BoxLayout:
                 orientation: 'horizontal'
-                spacing: 20
-                height: self.minimum_height
+                spacing: 30  # Mehr Abstand zwischen den Buttons
+                size_hint_y: None
+                height: 60
 
                 Button:
                     text: 'Zurück'
@@ -75,4 +77,3 @@
                     size_hint_y: None
                     height: 50
                     on_press: root.speichern_in_db(checkbox_list)
-
