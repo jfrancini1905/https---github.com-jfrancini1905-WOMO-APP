@@ -53,12 +53,7 @@ class MyScreenManager(ScreenManager):
     pass
 
 class MyRootWidget(BoxLayout):
-<<<<<<< HEAD
     def speichern_in_db(self, checkbox_list):
-=======
-    def speichern_in_db(self):
-        name = "speichern_in_db"
->>>>>>> a14a85f (FUnktioniert ist aber schlechtes Design)
         # Speichern der Daten in der Datenbank
         get_checkbox_states = self.get_checkbox_states(checkbox_list)
         entries = "entries.db"
@@ -84,8 +79,8 @@ class MyApp(App):
     def build(self):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
         Builder.load_file("MyApp.kv")
-        Builder.load_file("verwaltung.kv")  # Verwaltungskv-Datei hier laden
-        Builder.load_file("checkliste.kv")  # Checklistekv-Datei hier laden
+        Builder.load_file("verwaltung.kv")  
+        Builder.load_file("checkliste.kv")  
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
@@ -120,8 +115,8 @@ class MyApp(App):
         popup = Popup(
             title="Neue Option hinzufügen",
             content=popup_layout,
-            size_hint=(0.8, 0.4),  # Größe des Popups (Breite, Höhe)
-            auto_dismiss=False  # Schließt sich nicht automatisch
+            size_hint=(0.8, 0.4),  
+            auto_dismiss=False  
         )
 
         # Popup anzeigen
