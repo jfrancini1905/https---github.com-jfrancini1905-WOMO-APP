@@ -5,6 +5,12 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.checkbox import CheckBox
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.scrollview import ScrollView
+
+# Importiere die CameraScreen-Klasse, falls vorhanden
 from camera import CameraScreen
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -39,18 +45,28 @@ class StellplatzverwaltungScreen(Screen):
 
 class CameraScreen(Screen):
     pass
+
 # Der ScreenManager, der die Screens verwaltet
 class MyScreenManager(ScreenManager):
     pass
-
 
 class MyRootWidget(BoxLayout):
     def speichern_in_db(self):
         # Speichern der Daten in der Datenbank
         entries = "entries.db"
         conn = dbscript.create_connection(entries)
-        dbscript.add_entry(conn,self.ids.Bezeichnung.text,self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
+        dbscript.add_entry(conn, self.ids.Bezeichnung.text, self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
         
+class CustomScrollView(ScrollView):
+    def __init__(self, **kwargs):
+        super(CustomScrollView, self).__init__(**kwargs)
+        self.container = BoxLayout(orientation='vertical', size_hint_y=None)
+        self.container.bind(minimum_height=self.container.setter('height'))
+        super(CustomScrollView, self).add_widget(self.container)
+
+    def add_widget(self, widget, *args, **kwargs):
+        self.container.add_widget(widget, *args, **kwargs)
+
 
 class MyApp(App):
     def build(self):
@@ -65,8 +81,9 @@ class MyApp(App):
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         sm.add_widget(ChecklistScreen(name='checkliste'))
-        #sm.add_widget(CameraScreen(name='camera'))
+        sm.add_widget(CameraScreen(name='camera'))
         return sm
+
     def add_more_options(self, checkbox_list):
         new_option = BoxLayout(orientation='horizontal')
         new_checkbox = CheckBox()
@@ -74,6 +91,7 @@ class MyApp(App):
         new_option.add_widget(new_checkbox)
         new_option.add_widget(new_label)
         checkbox_list.add_widget(new_option)
+
     def get_checkbox_states(self, checkbox_list):
         states = {}
         for item in checkbox_list.children:
@@ -83,8 +101,10 @@ class MyApp(App):
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
                     states[label.text] = checkbox.active  # True oder False für aktiv/inaktiv
         return states
+    
+    
 
-
+        
 
 if __name__ == '__main__':
     app = MyApp()
