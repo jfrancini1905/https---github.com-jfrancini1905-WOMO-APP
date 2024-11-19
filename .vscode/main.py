@@ -1,7 +1,7 @@
 import kivy
+kivy.parse_kivy_version('1.11.0')
 import plyer
 from plyer import gps
-kivy.parse_kivy_version('1.11.0')
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
@@ -15,6 +15,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.layout import Layout
+
 
 
 from kivy.uix.image import Image
@@ -142,7 +143,6 @@ class MyApp(App):
             height=50,
             spacing=10
         )
-
         # Checkbox und Label hinzufügen
         new_label = Label(text=label_text, font_size=32, color=(0, 0, 0, 1)) #Schwarze Textfarbe 
         new_checkbox = CheckBox()
