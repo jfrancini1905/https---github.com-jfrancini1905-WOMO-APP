@@ -125,6 +125,13 @@
             size_hint_y: None
             height: 40
 
+        Button:
+            text: 'aktuellen Standort einfügen'
+            font_size: 24
+            size_hint_y: None
+            height: 20
+            on_press: app.get_location(self)
+
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
@@ -208,7 +215,7 @@
             font_size: 24
             size_hint: (0.5, None)
             height: 50
-            on_press: root.speichern_in_db(checkbox_list)
+            on_press: root.speichern_in_db(self, checkbox_list)
 
 
 <CameraScreen>:

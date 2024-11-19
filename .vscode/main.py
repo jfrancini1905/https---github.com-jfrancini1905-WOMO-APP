@@ -1,4 +1,6 @@
 import kivy
+import plyer
+from plyer import gps
 kivy.parse_kivy_version('1.11.0')
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -97,13 +99,9 @@ class MyApp(App):
         return sm
 
     def show_popup(self, checkbox_list):
-        # Layout für das Popup
         popup_layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
-
-        # TextInput für die Eingabe
         text_input = TextInput(hint_text="Gib den Text für das Label ein", size_hint_y=None, height=50)
 
-        # Button zum Hinzufügen
         confirm_button = Button(
             text="Hinzufügen",
             size_hint_y=None,
@@ -116,7 +114,7 @@ class MyApp(App):
         popup_layout.add_widget(text_input)
         popup_layout.add_widget(confirm_button)
 
-        # Popup erstellen
+        
         popup = Popup(
             title="Neue Option hinzufügen",
             content=popup_layout,
@@ -124,11 +122,10 @@ class MyApp(App):
             auto_dismiss=False  
         )
 
-        # Popup anzeigen
+        
         popup.open()
 
     def add_more_options(self, checkbox_list, label_text, popup):
-        # Text prüfen
         if not label_text.strip():
             label_text = f"Option {len(checkbox_list.children) + 1}"
 
@@ -143,14 +140,9 @@ class MyApp(App):
         # Checkbox und Label hinzufügen
         new_checkbox = CheckBox()
         new_label = Label(text=label_text, font_size=24)
-
         new_option.add_widget(new_checkbox)
         new_option.add_widget(new_label)
-
-        # Neues Element zur Liste hinzufügen
         checkbox_list.add_widget(new_option)
-
-        # Popup schließen
         popup.dismiss()
     def get_checkbox_states(self, checkbox_list):
         states = {}
@@ -161,6 +153,27 @@ class MyApp(App):
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
                     states[label.text] = checkbox.active  # True oder False für aktiv/inaktiv
         return states
+    def on_location(self, **kwargs):
+        # Standortdaten verarbeiten und anzeigen
+        latitude = kwargs.get('lat', 'Unbekannt')
+        longitude = kwargs.get('lon', 'Unbekannt')
+        self.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
+        gps.stop()  # GPS-Dienst stoppen, um Batterie zu sparen
+    def get_current_location(self, *args):
+        try:
+            # GPS-Daten abrufen
+            gps.configure(on_location=self.on_location, on_status=self.on_status)
+            gps.start()
+            self.GPS_Koordinaten.text = "GPS wird abgerufen..."
+        except NotImplementedError:
+            self.GPS_Koordinaten.text = "GPS wird auf diesem Gerät nicht unterstützt."
+
+    def on_status(self, stype, status):
+        # Statusmeldung (z. B. Fehler oder Erfolg)
+        if stype == "provider-enabled":
+            self.coordinates_label.text = "GPS aktiviert."
+        elif stype == "provider-disabled":
+            self.coordinates_label.text = "GPS deaktiviert."
 
 if __name__ == '__main__':
     app = MyApp()
