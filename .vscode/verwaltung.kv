@@ -2,6 +2,13 @@
 
 <VerwaltungsScreen>:
     name: 'verwaltung'
+    canvas.before:
+        Color:
+            rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
     CustomScrollView:
         BoxLayout:
             orientation: 'vertical'
@@ -10,17 +17,11 @@
             size_hint_y: None
             height: self.minimum_height
 
-            canvas.before:
-                Color:
-                    rgba: 245/255, 245/255, 220/255, 1  # Beige
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-
             BoxLayout:
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
+                spacing: 30
                 
                 Button:
                     text: 'XML-Export'
@@ -43,19 +44,23 @@
                     height: 50
                     on_press: app.root.current = 'Stellplatzeinträge'
 
+            Widget:
+                size_hint_y: None
+                height: 20
+
             BoxLayout:
                 orientation: 'horizontal'
                 spacing: 20
                 size_hint_y: None
                 height: 50
+                pos_hint: {"bottom": 1}  # Sorgt dafür, dass das BoxLayout am unteren Rand bleibt
 
                 Button:
                     text: 'Zurück'
                     font_size: 24
-                    size_hint_y: None
+                    size_hint: (0.5, None)
                     height: 50
                     on_press: app.root.current = 'main'
-
 
 
 <StellplatzverwaltungScreen>:
@@ -64,12 +69,25 @@
         orientation: 'vertical'
         padding: [50, 50, 50, 50]
         spacing: 20
-
+        
         canvas.before:
             Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
+                rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
             Rectangle:
                 pos: self.pos
                 size: self.size
 
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+            size_hint_y: None
+            height: 50
+            pos_hint: {"bottom": 1}  # Sorgt dafür, dass das BoxLayout am unteren Rand bleibt
+
+            Button:
+                text: 'Zurück'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
         # Weitere Widgets hier hinzufügen
