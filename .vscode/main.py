@@ -51,7 +51,7 @@ class VerwaltungsScreen(Screen):
 class StellplatzverwaltungScreen(Screen):
     pass
 
-class StellplatzuebersichtScreen(Screen):
+class StellplatzübersichtScreen(Screen):
     pass
 
 class CameraScreen(Screen):
@@ -91,7 +91,8 @@ class MyApp(App):
         # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
         Builder.load_file("MyApp.kv")
         Builder.load_file("verwaltung.kv")  
-        Builder.load_file("checkliste.kv")  
+        Builder.load_file("checkliste.kv") 
+        Builder.load_file("uebersicht.kv") 
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
@@ -99,7 +100,7 @@ class MyApp(App):
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         sm.add_widget(ChecklistScreen(name='checkliste'))
-        sm.add_widget(StellplatzuebersichtScreen(name='uebersicht'))
+        sm.add_widget(StellplatzübersichtScreen(name='uebersicht'))
         sm.add_widget(CameraScreen(name='camera'))
         return sm
 
