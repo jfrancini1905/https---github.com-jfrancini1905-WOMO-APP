@@ -130,12 +130,7 @@ class MyApp(App):
         
         popup.open()
 
-<<<<<<< HEAD
     def add_more_options(self, checkbox_list, label_text, popup):
-=======
-    def add_more_options(self, label_text, checkbox_list,  popup):
-        # Text prüfen
->>>>>>> 0103ecf (Layout funktioniert)
         if not label_text.strip():
             label_text = f"Option {len(checkbox_list.children) + 1}"
 
@@ -150,18 +145,9 @@ class MyApp(App):
         # Checkbox und Label hinzufügen
         new_label = Label(text=label_text, font_size=32, color=(0, 0, 0, 1)) #Schwarze Textfarbe 
         new_checkbox = CheckBox()
-<<<<<<< HEAD
         new_label = Label(text=label_text, font_size=24)
         new_option.add_widget(new_checkbox)
         new_option.add_widget(new_label)
-=======
-        
-        new_option.add_widget(new_label)
-        new_option.add_widget(new_checkbox)
-        
-
-        # Neues Element zur Liste hinzufügen
->>>>>>> 0103ecf (Layout funktioniert)
         checkbox_list.add_widget(new_option)
         popup.dismiss()
     def get_checkbox_states(self, checkbox_list):
