@@ -7,5 +7,5 @@
   # ScrollView ausführen ist schwierig 
   # Kamera Funktioniert nicht
   # Formatierung zerschossen
-  #
+  # GPS einbinden ist schwierig 
 
