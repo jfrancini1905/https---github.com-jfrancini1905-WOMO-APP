@@ -164,23 +164,24 @@ class MyApp(App):
         # Standortdaten verarbeiten und anzeigen
         latitude = kwargs.get('lat', 'Unbekannt')
         longitude = kwargs.get('lon', 'Unbekannt')
-        self.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
+        self.root.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
         gps.stop()  # GPS-Dienst stoppen, um Batterie zu sparen
     def get_current_location(self, *args):
         try:
             # GPS-Daten abrufen
             gps.configure(on_location=self.on_location, on_status=self.on_status)
             gps.start()
-            self.ids.GPS_Koordinaten.text = "GPS wird abgerufen..."
+            self.root.ids.GPS_Koordinaten.text = "GPS wird abgerufen..."
         except NotImplementedError:
-            self.ids.GPS_Koordinaten.text = "GPS wird auf diesem Gerät nicht unterstützt."
+            self.root.ids.GPS_Koordinaten.text = "GPS wird auf diesem Gerät nicht unterstützt."
 
     def on_status(self, stype, status):
         # Statusmeldung (z. B. Fehler oder Erfolg)
         if stype == "provider-enabled":
-            self.ids.GPS_Koordinaten.text = "GPS aktiviert."
+            self.root.ids.GPS_Koordinaten.text = "GPS aktiviert."
         elif stype == "provider-disabled":
-            self.ids.GPS_Koordinaten.text = "GPS deaktiviert."
+            self.root.ids.GPS_Koordinaten.text = "GPS deaktiviert."
+
 
 if __name__ == '__main__':
     app = MyApp()
