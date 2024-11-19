@@ -1,0 +1,32 @@
+#:kivy 1.11.0
+
+<StellplatzübersichtScreen>:
+    name: 'uebersicht'
+    BoxLayout:
+        orientation: 'vertical'
+
+        canvas.before:
+            Color:
+                rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Restliche Widgets und Layouts innerhalb des BoxLayouts definieren
+        Widget:
+            size_hint_y: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+            size_hint_y: None
+            height: 50
+            padding: [20, 20, 20, 20]
+
+            Button:
+                text: 'Zurück'
+                font_size: 32
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
+

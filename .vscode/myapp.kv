@@ -24,7 +24,7 @@
 
         Label:
             text: 'Willkommen in der WoMo-App!'
-            font_size: 32
+            font_size: 48
             color: 0, 0, 0, 1  # Schwarze Textfarbe
             halign: 'center'
             valign: 'middle'
@@ -68,21 +68,21 @@
 
             Button:
                 text: 'Stellplatz'
-                font_size: 24
+                font_size: 32
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'stellplatz'
 
             Button:
                 text: 'Checkliste'
-                font_size: 24
+                font_size: 32
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'checkliste'
 
             Button:
                 text: 'Verwaltung'
-                font_size: 24
+                font_size: 32
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'verwaltung'
@@ -108,7 +108,7 @@
 
         Label:
             text: 'Stellplatz Details'
-            font_size: 32
+            font_size: 48
             color: 0, 0, 0, 1 # Schwarze Textfarbe 
             size_hint_y: None
             height: self.texture_size[1]
@@ -116,16 +116,16 @@
         TextInput:
             id: Bezeichnung
             hint_text: 'Bezeichnung'
-            font_size: 24
+            font_size: 32
             size_hint_y: None
-            height: 40
+            height: 50
 
         TextInput:
             id: GPS_Koordinaten
             hint_text: 'GPS-Koordinaten'
-            font_size: 24
+            font_size: 32
             size_hint_y: None
-            height: 40
+            height: 50
 
         Button:
             text: 'aktuellen Standort einfügen'
@@ -142,21 +142,21 @@
 
             Button:
                 text: 'Kamera'
-                font_size: 24
+                font_size: 32
                 size_hint_y: None
                 height: 50
                 on_press: app.root.current = 'camera'  # Wechsel zum CameraScreen
 
             Label:
                 text: 'Bilder hinzufügen'
-                font_size: 24
+                font_size: 32
                 color: 0, 0, 0, 1 # Schwarze Textfarbe
 
-            Button:
-                text: 'Bild auswählen'
-                font_size: 24
-                size_hint_y: None
-                height: 50
+            #Button:
+            #    text: 'Bild auswählen'
+            #    font_size: 24
+            #    size_hint_y: None
+            #    height: 50
 
         ScrollView:
             size_hint: (1, None)
@@ -177,7 +177,7 @@
                     spacing: 10
                     Label:
                         text: "Toilette"
-                        font_size: 24
+                        font_size: 32
                         color: 0, 0, 0, 1 # Schwarze Textfarbe
                     CheckBox:
 
@@ -188,7 +188,7 @@
                     spacing: 10
                     Label:
                         text: "Dusche"
-                        font_size: 24
+                        font_size: 32
                         color: 0, 0, 0, 1 # Schwarze Textfarbe 
                     CheckBox:
 
@@ -221,14 +221,14 @@
 =======
             Button:
                 text: 'Zurück'
-                font_size: 24
+                font_size: 32
                 size_hint: (0.5, None)
                 height: 50
                 on_press: app.root.current = 'main'
 
             Button:
                 text: 'Speichern'
-                font_size: 24
+                font_size: 32
                 size_hint: (0.5, None)
                 height: 50
                 on_press: root.speichern_in_db(checkbox_list)
