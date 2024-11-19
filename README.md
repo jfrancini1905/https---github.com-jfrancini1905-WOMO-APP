@@ -8,4 +8,4 @@
   # Kamera Funktioniert nicht
   # Formatierung zerschossen
   # GPS einbinden ist schwierig 
-
+  # Speichern funktioniert noch nicht 
