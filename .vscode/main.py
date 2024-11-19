@@ -51,6 +51,9 @@ class VerwaltungsScreen(Screen):
 class StellplatzverwaltungScreen(Screen):
     pass
 
+class StellplatzuebersichtScreen(Screen):
+    pass
+
 class CameraScreen(Screen):
     pass
 
@@ -96,6 +99,7 @@ class MyApp(App):
         sm.add_widget(VerwaltungsScreen(name='verwaltung'))
         sm.add_widget(StellplatzverwaltungScreen(name='Stellplatzeinträge'))
         sm.add_widget(ChecklistScreen(name='checkliste'))
+        sm.add_widget(StellplatzuebersichtScreen(name='uebersicht'))
         sm.add_widget(CameraScreen(name='camera'))
         return sm
 
@@ -107,7 +111,7 @@ class MyApp(App):
             text="Hinzufügen",
             size_hint_y=None,
             height=50,
-            on_release=lambda btn: self.add_more_options(checkbox_list, text_input.text, popup)
+            on_release=lambda btn: self.add_more_options(text_input.text, checkbox_list, popup)
         )
 
         # Elemente zum Popup-Layout hinzufügen
@@ -126,7 +130,12 @@ class MyApp(App):
         
         popup.open()
 
+<<<<<<< HEAD
     def add_more_options(self, checkbox_list, label_text, popup):
+=======
+    def add_more_options(self, label_text, checkbox_list,  popup):
+        # Text prüfen
+>>>>>>> 0103ecf (Layout funktioniert)
         if not label_text.strip():
             label_text = f"Option {len(checkbox_list.children) + 1}"
 
@@ -139,18 +148,28 @@ class MyApp(App):
         )
 
         # Checkbox und Label hinzufügen
+        new_label = Label(text=label_text, font_size=32, color=(0, 0, 0, 1)) #Schwarze Textfarbe 
         new_checkbox = CheckBox()
+<<<<<<< HEAD
         new_label = Label(text=label_text, font_size=24)
         new_option.add_widget(new_checkbox)
         new_option.add_widget(new_label)
+=======
+        
+        new_option.add_widget(new_label)
+        new_option.add_widget(new_checkbox)
+        
+
+        # Neues Element zur Liste hinzufügen
+>>>>>>> 0103ecf (Layout funktioniert)
         checkbox_list.add_widget(new_option)
         popup.dismiss()
     def get_checkbox_states(self, checkbox_list):
         states = {}
         for item in checkbox_list.children:
             if isinstance(item, BoxLayout):
-                checkbox = item.children[1]  # Checkbox ist das zweite Kind im Layout
-                label = item.children[0]     # Label ist das erste Kind im Layout
+                checkbox = item.children[0]  # Checkbox ist das zweite Kind im Layout
+                label = item.children[1]     # Label ist das erste Kind im Layout
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
                     states[label.text] = checkbox.active  # True oder False für aktiv/inaktiv
         return states

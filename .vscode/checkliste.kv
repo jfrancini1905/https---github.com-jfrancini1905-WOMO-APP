@@ -1,10 +1,11 @@
 #:kivy 1.11.0
+
 <ChecklistScreen>:
     name: 'checkliste'
     BoxLayout:
         orientation: 'vertical'
-        # padding: [50, 50, 50, 50]
         spacing: 30  # Mehr Abstand zwischen den Boxen
+        padding: [50, 50, 50, 50]
 
         canvas.before:
             Color:
@@ -13,54 +14,71 @@
                 pos: self.pos
                 size: self.size
 
+        # Platzhalter-Widget für die obere Leiste
+        Widget:
+            size_hint_y: None
+            height: 20
+
         Label:
             text: 'Checkliste'
-            font_size: 32
+            font_size: 48
             size_hint_y: None
             height: self.texture_size[1]
             color: 0, 0, 0, 1  # Schwarze Textfarbe
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.size
+            
+
+        # Platzhalter-Widget für Abstand
+        #Widget:
+        #    size_hint_y: None
+        #    height: 20
 
         ScrollView:
             size_hint: (1, None)
             height: 500  # Feste Höhe für die ScrollView
 
-            BoxLayout:
-                orientation: 'vertical'
-                padding: [0, 30, 0, 30]  # Mehr Padding oben und unten
-                spacing: 40  # Abstand zwischen den Checkboxen
+            GridLayout:
+                id: checkbox_list
+                cols: 1
                 size_hint_y: None
                 height: self.minimum_height
-                
+                spacing: 10  # Abstand zwischen den Checkboxen
+
+                # Initialer Inhalt
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 50
+                    spacing: 10
+                    Label:
+                        text: "Stützen eingefahren"
+                        font_size: 32
+                        color: 0, 0, 0, 1 # Schwarze Textfarbe
+                    CheckBox:
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 15  # Abstand zwischen Text und Checkbox
+                    size_hint_y: None
+                    height: 50
+                    spacing: 10
                     Label:
-                        text: 'Stützen eingefahren'
-                        font_size: 24
-                        color: 0, 0, 0, 1  # Schwarze Textfarbe
+                        text: "Markise"
+                        font_size: 32
+                        color: 0, 0, 0, 1 # Schwarze Textfarbe 
                     CheckBox:
-                        id: checkbox_stuetze
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 15
+                    size_hint_y: None
+                    height: 50
+                    spacing: 10
                     Label:
-                        text: 'Markise eingefahren'
-                        font_size: 24
-                        color: 0, 0, 0, 1  # Schwarze Textfarbe
+                        text: "Stufen eingefahren"
+                        font_size: 32
+                        color: 0, 0, 0, 1 # Schwarze Textfarbe 
                     CheckBox:
-                        id: checkbox_markise
-
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 15
-                    Label:
-                        text: 'Trittstufe eingefahren'
-                        font_size: 24
-                        color: 0, 0, 0, 1  # Schwarze Textfarbe
-                    CheckBox:
-                        id: checkbox_trittstufe
 
         Button:
             text: "Hinzufügen"
@@ -74,23 +92,23 @@
             color: 0, 0, 0, 1 # Schwarze Textfarbe 
             spacing: 10
 
-            BoxLayout:
-                orientation: 'horizontal'
-                spacing: 30  # Mehr Abstand zwischen den Buttons
-                size_hint_y: None
-                height: 60
-                pos_hint: {"bottom": 1}  # Sorgt dafür, dass das BoxLayout am unteren Rand bleibt
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 30  # Mehr Abstand zwischen den Buttons
+            size_hint_y: None
+            height: 60
+            pos_hint: {"bottom": 1}  # Sorgt dafür, dass das BoxLayout am unteren Rand bleibt
 
-                Button:
-                    text: 'Zurück'
-                    font_size: 24
-                    size_hint_y: None
-                    height: 50
-                    on_press: app.root.current = 'main'
+            Button:
+                text: 'Zurück'
+                font_size: 32
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
 
-                Button:
-                    text: 'Speichern'
-                    font_size: 24
-                    size_hint_y: None
-                    height: 50
-                    on_press: root.speichern_in_db(checkbox_list)
+            Button:
+                text: 'Speichern'
+                font_size: 32
+                size_hint: (0.5, None)
+                height: 50
+                on_press: root.speichern_in_db(checkbox_list)
