@@ -14,6 +14,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
+from kivy.uix.layout import Layout
 
 
 from kivy.uix.image import Image

@@ -3,12 +3,12 @@
     name: 'checkliste'
     BoxLayout:
         orientation: 'vertical'
-        padding: [50, 50, 50, 50]
-        spacing: 20
+        # padding: [50, 50, 50, 50]
+        spacing: 30  # Mehr Abstand zwischen den Boxen
 
         canvas.before:
             Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
+                rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -18,18 +18,23 @@
             font_size: 32
             size_hint_y: None
             height: self.texture_size[1]
+            color: 0, 0, 0, 1  # Schwarze Textfarbe
 
-        CustomScrollView:
+        ScrollView:
+            size_hint: (1, None)
+            height: 500  # Feste Höhe für die ScrollView
+
             BoxLayout:
                 orientation: 'vertical'
-                padding: [0, 50, 0, 50]
-                spacing: 20
+                padding: [0, 30, 0, 30]  # Mehr Padding oben und unten
+                spacing: 40  # Abstand zwischen den Checkboxen
                 size_hint_y: None
                 height: self.minimum_height
+                
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 10
+                    spacing: 15  # Abstand zwischen Text und Checkbox
                     Label:
                         text: 'Stützen eingefahren'
                         font_size: 24
@@ -39,7 +44,7 @@
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 10
+                    spacing: 15
                     Label:
                         text: 'Markise eingefahren'
                         font_size: 24
@@ -49,7 +54,7 @@
 
                 BoxLayout:
                     orientation: 'horizontal'
-                    spacing: 10
+                    spacing: 15
                     Label:
                         text: 'Trittstufe eingefahren'
                         font_size: 24
@@ -57,10 +62,24 @@
                     CheckBox:
                         id: checkbox_trittstufe
 
+        Button:
+            text: "Hinzufügen"
+            size_hint_y: None
+            height: 50
+            on_release: app.show_popup(checkbox_list)
+
+        Widget:
+            size_hint_y: None
+            height: 20
+            color: 0, 0, 0, 1 # Schwarze Textfarbe 
+            spacing: 10
+
             BoxLayout:
                 orientation: 'horizontal'
-                spacing: 20
-                height: self.minimum_height
+                spacing: 30  # Mehr Abstand zwischen den Buttons
+                size_hint_y: None
+                height: 60
+                pos_hint: {"bottom": 1}  # Sorgt dafür, dass das BoxLayout am unteren Rand bleibt
 
                 Button:
                     text: 'Zurück'
@@ -75,4 +94,3 @@
                     size_hint_y: None
                     height: 50
                     on_press: root.speichern_in_db(checkbox_list)
-

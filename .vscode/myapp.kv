@@ -17,7 +17,7 @@
 
         canvas.before:
             Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
+                rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -36,7 +36,6 @@
             size_hint_y: None
             height: 20
 
-
 <MainScreen>:
     BoxLayout:
         orientation: 'vertical'
@@ -45,7 +44,7 @@
 
         canvas.before:
             Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
+                rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -92,6 +91,8 @@
             size_hint_y: None
             height: 50
 
+#:kivy 1.11.0
+
 <StellplatzScreen>:
     BoxLayout:
         orientation: 'vertical'
@@ -100,7 +101,7 @@
 
         canvas.before:
             Color:
-                rgba: 245/255, 245/255, 220/255, 1  # Beige
+                rgba: 173/255, 223/255, 173/255, 1  # Moosgrün
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -108,6 +109,7 @@
         Label:
             text: 'Stellplatz Details'
             font_size: 32
+            color: 0, 0, 0, 1 # Schwarze Textfarbe 
             size_hint_y: None
             height: self.texture_size[1]
 
@@ -148,6 +150,7 @@
             Label:
                 text: 'Bilder hinzufügen'
                 font_size: 24
+                color: 0, 0, 0, 1 # Schwarze Textfarbe
 
             Button:
                 text: 'Bild auswählen'
@@ -155,21 +158,16 @@
                 size_hint_y: None
                 height: 50
 
-
-    BoxLayout:
-        orientation: 'vertical'
-        spacing: 10
-
         ScrollView:
             size_hint: (1, None)
-            height: 300
+            height: 500  # Feste Höhe für die ScrollView
 
             GridLayout:
                 id: checkbox_list
                 cols: 1
                 size_hint_y: None
                 height: self.minimum_height
-                spacing: 20
+                spacing: 10  # Abstand zwischen den Checkboxen
 
                 # Initialer Inhalt
                 BoxLayout:
@@ -177,47 +175,65 @@
                     size_hint_y: None
                     height: 50
                     spacing: 10
-                    CheckBox:
                     Label:
                         text: "Toilette"
                         font_size: 24
+                        color: 0, 0, 0, 1 # Schwarze Textfarbe
+                    CheckBox:
 
                 BoxLayout:
                     orientation: 'horizontal'
                     size_hint_y: None
                     height: 50
                     spacing: 10
-                    CheckBox:
                     Label:
                         text: "Dusche"
                         font_size: 24
+                        color: 0, 0, 0, 1 # Schwarze Textfarbe 
+                    CheckBox:
 
         Button:
-            text: "Mehr Optionen anzeigen"
+            text: "Hinzufügen"
             size_hint_y: None
             height: 50
             on_release: app.show_popup(checkbox_list)
 
+        Widget:
+            size_hint_y: None
+            height: 20
+            color: 0, 0, 0, 1 # Schwarze Textfarbe 
+            spacing: 10
 
-    BoxLayout:
-        orientation: 'horizontal'
-        spacing: 20
-
-        Button:
-            text: 'Zurück'
-            font_size: 24
-            size_hint: (0.5, None)
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
             height: 50
-            on_press: app.root.current = 'main'
+            spacing: 20
+            pos_hint: {"bottom": 1}  # Sorgt dafür, dass das BoxLayout am unteren Rand bleibt
 
+<<<<<<< HEAD
         Button:
             text: 'Speichern'
             font_size: 24
             size_hint: (0.5, None)
             height: 50
             on_press: root.speichern_in_db(self, checkbox_list)
+=======
+            Button:
+                text: 'Zurück'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: app.root.current = 'main'
+
+            Button:
+                text: 'Speichern'
+                font_size: 24
+                size_hint: (0.5, None)
+                height: 50
+                on_press: root.speichern_in_db(checkbox_list)
+>>>>>>> 1a169a49afc8a5e4ed410b521b685a934ea1ea32
 
 
 <CameraScreen>:
     name: 'camera'
-   
