@@ -15,12 +15,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.layout import Layout
-
-
-
 from kivy.uix.image import Image
-
-# Importiere die CameraScreen-Klasse, falls vorhanden
 from camera import CameraScreen
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -28,10 +23,10 @@ from kivy.uix.checkbox import CheckBox
 
 import dbscript
 
-# Definiere die Screens
+# Definieren der Screens
 class StartScreen(Screen):
     def on_enter(self):
-        # Wechsel nach 2 Sekunden zur MainScreen
+        # Wechsel nach 2 Sekunden zum Main-Screen
         Clock.schedule_once(self.switch_to_main, 2)
 
     def switch_to_main(self, dt):
@@ -58,19 +53,8 @@ class StellplatzübersichtScreen(Screen):
 class CameraScreen(Screen):
     pass
 
-# Der ScreenManager, der die Screens verwaltet
 class MyScreenManager(ScreenManager):
     pass
-
-class MyRootWidget(BoxLayout):
-
-    def speichern_in_db(self, checkbox_list):
-        name = "speichern_in_db"
-        # Speichern der Daten in der Datenbank
-        get_checkbox_states = self.get_checkbox_states(checkbox_list)
-        entries = "entries.db"
-        conn = dbscript.create_connection(entries)
-        dbscript.add_entry(conn, self.ids.Bezeichnung.text, self.ids.GPS_Koordinaten.text, self.ids.checklist.text)
 
 class CustomScrollView(ScrollView):
     def __init__(self, **kwargs):
@@ -89,7 +73,7 @@ class CustomScrollView(ScrollView):
 
 class MyApp(App):
     def build(self):
-        # Standardbildschirm laden (StartScreen, MainScreen, StellplatzScreen)
+        # Standardbildschirme laden
         Builder.load_file("MyApp.kv")
         Builder.load_file("verwaltung.kv")  
         Builder.load_file("checkliste.kv") 
@@ -178,16 +162,70 @@ class MyApp(App):
     def on_status(self, stype, status):
         # Statusmeldung (z. B. Fehler oder Erfolg)
         if stype == "provider-enabled":
-
             self.root.ids.GPS_Koordinaten.text = "GPS aktiviert."
         elif stype == "provider-disabled":
             self.root.ids.GPS_Koordinaten.text = "GPS deaktiviert."
+    def speichern_in_db(self, checkbox_list):
+        try:
+            checkbox_states = self.get_checkbox_states(checkbox_list)
+            bezeichnung = self.ids.Bezeichnung.text.strip()
+            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()
+            checklist = self.ids.checklist.text.strip()        
+            entries = "entries.db"
+            conn = dbscript.create_connection(entries)
 
+            if conn:
+                dbscript.add_entry(conn, bezeichnung, gps_koordinaten, checklist)
+                self.show_success_popup()  # Popup anzeigen
+            else:   
+                self.show_error_popup()
+                
+        except Exception as e:
+            self.show_error_popup()
+        finally:
+            if conn:
+                conn.close()
 
-            self.coordinates_label.text = "GPS aktiviert."
-        elif stype == "provider-disabled":
-            self.coordinates_label.text = "GPS deaktiviert."
+    
+    def show_success_popup(self):
+        # Popup-Inhalt
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
 
+        message = Label(text="Daten wurden erfolgreich gespeichert!", halign='center')
+        content.add_widget(message)
+
+        close_button = Button(text="OK", size_hint=(1, 0.5))
+        content.add_widget(close_button)
+
+        popup = Popup(
+            title="Erfolg",
+            content=content,
+            size_hint=(0.7, 0.4),  
+            auto_dismiss=False 
+        )
+        close_button.bind(on_release=popup.dismiss)
+        popup.open()
+
+    def show_error_popup(self, error_message="Ein Fehler ist aufgetreten."):
+        # Layout für den Popup-Inhalt
+        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
+
+        message = Label(text=f"[b]Fehler:[/b] {error_message}", markup=True, halign='center')
+        content.add_widget(message)
+
+        close_button = Button(text="OK", size_hint=(1, 0.5))
+        content.add_widget(close_button)
+
+        popup = Popup(
+            title="Speichern fehlgeschlagen",
+            content=content,
+            size_hint=(0.7, 0.4), 
+            auto_dismiss=False 
+        )
+
+        close_button.bind(on_release=popup.dismiss)
+
+        popup.open()
 
 if __name__ == '__main__':
     app = MyApp()
