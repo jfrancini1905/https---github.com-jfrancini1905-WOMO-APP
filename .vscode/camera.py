@@ -14,11 +14,6 @@ class CameraScreen(Screen):
         self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8), pos_hint={'x': 0, 'y': 0.2})
         layout.add_widget(self.camera)
 
-        # Button um die Kamera zu starten
-        #start_button = Button(text="Start Camera", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0.8})
-        #start_button.bind(on_press=self.start_camera)
-        #layout.add_widget(start_button)
-
         # Capture Button
         capture_button = Button(text="Foto", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0})
         capture_button.bind(on_press=self.capture)
