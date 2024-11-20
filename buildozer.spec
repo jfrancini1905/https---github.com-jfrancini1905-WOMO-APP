@@ -1,5 +1,8 @@
 [app]
 
+# (bool) Enable Android App Bundle support (default: false)
+android.aab = true 
+
 # (str) Title of your application
 title = WoMO-App
 
