@@ -1,8 +1,5 @@
 [app]
 
-# (bool) Enable Android App Bundle support (default: false)
-android.aab = true 
-
 # (str) Title of your application
 title = WoMO-App
 
@@ -13,7 +10,10 @@ package.name = myapp
 package.domain = org.test
 
 # (str) Source code where the main.py live
-source.dir = .
+source.dir = main.py
+
+# (bool) Enable Android App Bundle support (default: false)
+android.aab = true 
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas
@@ -40,7 +40,7 @@ version = 0.9
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy
+requirements = python3,kivy==1.11.0
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -67,7 +67,7 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.9
+osx.python_version = 3
 
 # Kivy version to use
 osx.kivy_version = 1.11.0
@@ -105,16 +105,16 @@ fullscreen = 0
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 31
+#android.api = 29
 
 # (int) Minimum API your APK / AAB will support.
 #android.minapi = 21
 
 # (int) Android SDK version to use
-#android.sdk = 20
+#android.sdk = 29
 
 # (str) Android NDK version to use
-#android.ndk = 23b
+#android.ndk = 25b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
@@ -143,7 +143,7 @@ fullscreen = 0
 # android.accept_sdk_license = False
 
 # (str) Android entry point, default is ok for Kivy-based app
-#android.entrypoint = org.kivy.android.PythonActivity
+#android.entrypoint = main.py
 
 # (str) Full name including package path of the Java class that implements Android Activity
 # use that parameter together with android.entrypoint to set custom Java class instead of PythonActivity
@@ -205,7 +205,7 @@ fullscreen = 0
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies =
+#android.gradle_dependencies = 'com.android.support:support-v4:27.1.1'
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
@@ -234,7 +234,7 @@ fullscreen = 0
 
 # (str) OUYA Console category. Should be one of GAME or APP
 # If you leave this blank, OUYA support will not be enabled
-#android.ouya.category = GAME
+#android.ouya.category = APP
 
 # (str) Filename of OUYA Console icon. It must be a 732x412 png image.
 #android.ouya.icon.filename = %(source.dir)s/data/ouya_icon.png
@@ -309,10 +309,17 @@ android.allow_backup = True
 # android.no-byte-compile-python = False
 
 # (str) The format used to package the app for release mode (aab or apk or aar).
-# android.release_artifact = aab
+# aab will output a .aab file and a .apk file.
+# apk will output a .apk file only.
+# aar will output a .aar file only.
+android.release_artifact = apk
+
+# Soll die Anwendung als AAB-Paket gebaut werden
+android.bundle = True
+
 
 # (str) The format used to package the app for debug mode (apk or aar).
-# android.debug_artifact = apk
+android.debug_artifact = apk
 
 #
 # Python for android (p4a) specific
