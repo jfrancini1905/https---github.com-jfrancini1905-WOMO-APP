@@ -15,12 +15,12 @@ class CameraScreen(Screen):
         layout.add_widget(self.camera)
 
         # Button um die Kamera zu starten
-        start_button = Button(text="Start Camera", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0.8})
-        start_button.bind(on_press=self.start_camera)
-        layout.add_widget(start_button)
+        #start_button = Button(text="Start Camera", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0.8})
+        #start_button.bind(on_press=self.start_camera)
+        #layout.add_widget(start_button)
 
         # Capture Button
-        capture_button = Button(text="Capture", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0})
+        capture_button = Button(text="Foto", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0})
         capture_button.bind(on_press=self.capture)
         layout.add_widget(capture_button)
 
@@ -30,12 +30,15 @@ class CameraScreen(Screen):
                               pos_hint={'right': 1, 'top': 1})
         close_button.bind(on_press=self.go_back_to_stellplatz)
         with close_button.canvas:
-            Color(1, 1, 1, 1)
+            self.ellipse_color = Color(1, 1, 1, 1)
             self.ellipse = Ellipse(pos=close_button.pos, size=close_button.size)
             close_button.bind(pos=self.update_shape, size=self.update_shape)
         layout.add_widget(close_button)
 
         self.add_widget(layout)
+
+    def on_enter(self):
+        self.start_camera(self)
 
     def update_shape(self, instance, value):
         self.ellipse.pos = instance.pos
@@ -47,8 +50,8 @@ class CameraScreen(Screen):
         print("Kamera gestartet")
 
     def capture(self, instance):
-        self.camera.export_to_png("captured_image.png")
-        print("Captured Image")
+        self.camera.export_to_png("Foto_image.png")
+        print("Foto Image")
 
     def go_back_to_stellplatz(self, instance):
         self.manager.current = 'stellplatz'

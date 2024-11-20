@@ -178,16 +178,16 @@ class MyApp(App):
     def on_status(self, stype, status):
         # Statusmeldung (z. B. Fehler oder Erfolg)
         if stype == "provider-enabled":
-<<<<<<< HEAD
+
             self.root.ids.GPS_Koordinaten.text = "GPS aktiviert."
         elif stype == "provider-disabled":
             self.root.ids.GPS_Koordinaten.text = "GPS deaktiviert."
 
-=======
+
             self.coordinates_label.text = "GPS aktiviert."
         elif stype == "provider-disabled":
             self.coordinates_label.text = "GPS deaktiviert."
->>>>>>> 44a564a (GPS root)
+
 
 if __name__ == '__main__':
     app = MyApp()
