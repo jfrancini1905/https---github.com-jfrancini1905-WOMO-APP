@@ -114,7 +114,7 @@ fullscreen = 0
 #android.sdk = 29
 
 # (str) Android NDK version to use
-#android.ndk = 21b
+#android.ndk = 25b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
@@ -314,6 +314,7 @@ android.allow_backup = True
 # aar will output a .aar file only.
 android.release_artifact = apk
 
+# Soll die Anwendung als AAB-Paket gebaut werden
 android.bundle = True
 
 
