@@ -9,3 +9,6 @@
   # Formatierung zerschossen
   # GPS einbinden ist schwierig 
   # Speichern funktioniert noch nicht 
+  # Verwandlung in Handy app ist sehr anstrengend
+  # GPS einbindung funktioniert
+  # 

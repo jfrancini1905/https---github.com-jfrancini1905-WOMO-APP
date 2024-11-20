@@ -21,9 +21,9 @@ def create_table(conn):
     conn.commit()
 
 # Eintrag hinzufügen
-def add_entry(conn, title, location, checklist, description):
-    query = f"INSERT INTO entries (title, location, checklist, description) VALUES ({title}, {location}, {checklist} );"
-    conn.execute(query, (title, description))
+def add_entry(conn, title, location, checklist):
+    query = f"INSERT INTO entries (title, location, checklist) VALUES ({title}, {location}, {checklist} );"
+    conn.execute(query, (title, location, checklist))
     conn.commit()
    
 

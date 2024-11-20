@@ -36,7 +36,48 @@ class MainScreen(Screen):
     pass
 
 class StellplatzScreen(Screen):
-    pass
+    def on_location(self, **kwargs):
+        # Standortdaten verarbeiten und anzeigen
+        latitude = kwargs.get('lat', 'Unbekannt')
+        longitude = kwargs.get('lon', 'Unbekannt')
+        self.root.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
+        gps.stop()  
+    def get_current_location(self, *args):
+        try:
+            # GPS-Daten abrufen
+            gps.configure(on_location=self.on_location, on_status=self.on_status)
+            gps.start()
+            self.ids.get('GPS_Koordinaten', None).text = "GPS wird abgerufen..."
+        except NotImplementedError:
+            self.ids.get('GPS_Koordinaten', None).text = "GPS wird auf diesem Gerät nicht unterstützt."
+
+    def on_status(self, stype, status):
+        # Statusmeldung (z. B. Fehler oder Erfolg)
+        if stype == "provider-enabled":
+             self.ids.get('GPS_Koordinaten', None).text = "GPS aktiviert."
+        elif stype == "provider-disabled":
+             self.ids.get('GPS_Koordinaten', None).text = "GPS deaktiviert."
+    def speichern_in_db(self, checkbox_list):
+        try:
+            checkbox_states = app.get_checkbox_states(checkbox_list)
+            bezeichnung = self.ids.Bezeichnung.text.strip()
+            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()     
+            entries = "entries.db"
+            conn = dbscript.create_connection(entries)
+
+            if conn:
+                dbscript.add_entry(conn, bezeichnung, gps_koordinaten, checkbox_states)
+                app.show_success_popup()  # Popup anzeigen
+            else:   
+                app.show_error_popup("Fehler bei Verbindung mit der Datenbank")
+                
+        except Exception as e:
+            app.show_error_popup("Fehler beim Speichern: " + str(e))
+        finally:
+            if conn:
+                conn.close()
+
+    
 
 class ChecklistScreen(Screen):
     pass
@@ -120,7 +161,6 @@ class MyApp(App):
         if not label_text.strip():
             label_text = f"Option {len(checkbox_list.children) + 1}"
 
-        # Neues BoxLayout erstellen
         new_option = BoxLayout(
             orientation='horizontal',
             size_hint_y=None,
@@ -142,50 +182,8 @@ class MyApp(App):
                 checkbox = item.children[0]  # Checkbox ist das zweite Kind im Layout
                 label = item.children[1]     # Label ist das erste Kind im Layout
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
-                    states[label.text] = checkbox.active  # True oder False für aktiv/inaktiv
+                    states[label.text] = checkbox.active
         return states
-    def on_location(self, **kwargs):
-        # Standortdaten verarbeiten und anzeigen
-        latitude = kwargs.get('lat', 'Unbekannt')
-        longitude = kwargs.get('lon', 'Unbekannt')
-        self.root.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
-        gps.stop()  # GPS-Dienst stoppen, um Batterie zu sparen
-    def get_current_location(self, *args):
-        try:
-            # GPS-Daten abrufen
-            gps.configure(on_location=self.on_location, on_status=self.on_status)
-            gps.start()
-            self.root.ids.GPS_Koordinaten.text = "GPS wird abgerufen..."
-        except NotImplementedError:
-            self.root.ids.GPS_Koordinaten.text = "GPS wird auf diesem Gerät nicht unterstützt."
-
-    def on_status(self, stype, status):
-        # Statusmeldung (z. B. Fehler oder Erfolg)
-        if stype == "provider-enabled":
-            self.root.ids.GPS_Koordinaten.text = "GPS aktiviert."
-        elif stype == "provider-disabled":
-            self.root.ids.GPS_Koordinaten.text = "GPS deaktiviert."
-    def speichern_in_db(self, checkbox_list):
-        try:
-            checkbox_states = self.get_checkbox_states(checkbox_list)
-            bezeichnung = self.ids.Bezeichnung.text.strip()
-            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()
-            checklist = self.ids.checklist.text.strip()        
-            entries = "entries.db"
-            conn = dbscript.create_connection(entries)
-
-            if conn:
-                dbscript.add_entry(conn, bezeichnung, gps_koordinaten, checklist)
-                self.show_success_popup()  # Popup anzeigen
-            else:   
-                self.show_error_popup()
-                
-        except Exception as e:
-            self.show_error_popup()
-        finally:
-            if conn:
-                conn.close()
-
     
     def show_success_popup(self):
         # Popup-Inhalt
