@@ -157,7 +157,7 @@ class MyApp(App):
         
         popup.open()
 
-    def add_more_options(self, checkbox_list, label_text, popup):
+    def add_more_options(self, label_text, checkbox_list, popup):
         if not label_text.strip():
             label_text = f"Option {len(checkbox_list.children) + 1}"
 
