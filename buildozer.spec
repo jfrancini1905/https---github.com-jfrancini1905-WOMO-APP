@@ -1,4 +1,4 @@
-[app]
+[[app]
 
 # (str) Title of your application
 title = WoMO-App
@@ -13,19 +13,46 @@ package.domain = org.test
 source.dir = main.py
 
 # (bool) Enable Android App Bundle support (default: false)
-android.aab = true 
+android.aab = false 
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas
 
-# (list) List of inclusions using pattern matching
-#source.include_patterns = assets/*,images/*.png
+# (str) Application versioning
+version = 0.9
 
-# (list) Source files to exclude (let empty to not exclude anything)
-#source.exclude_exts = spec
+# (list) Application requirements
+requirements = python3,kivy==1.11.0
 
-# (list) List of directory to exclude (let empty to not exclude anything)
-#source.exclude_dirs = tests, bin, venv
+# (str) Icon of the application
+icon.filename = %(source.dir)s/data/icon.png  # Hier das App-Symbol festlegen
+
+# (list) Supported orientations
+orientation = portrait
+
+# Android-specific settings
+fullscreen = 0
+android.archs = arm64-v8a, armeabi-v7a
+android.release_artifact = apk  # APK-Datei erstellen
+android.debug_artifact = apk   # APK-Datei für Debug-Modus
+android.allow_backup = True
+
+# (str) Path to the icon (image) for the app
+# The icon should be a .png file (e.g., 512x512 px recommended).
+# Place the icon in the directory: %(source.dir)s/data/icon.png
+# Replace this path with your actual image file location.
+
+# (list) Permissions
+# android.permissions = android.permission.INTERNET
+
+[buildozer]
+
+# (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
+log_level = 2
+
+# (str) Path to build output (i.e. .apk, .aab, .ipa) storage
+bin_dir = ./bin
+
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
@@ -410,7 +437,7 @@ ios.codesign.allowed = false
 #ios.manifest.full_size_image_url =
 
 
-[buildozer]
+
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
 log_level = 2
