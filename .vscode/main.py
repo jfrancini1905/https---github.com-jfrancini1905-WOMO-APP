@@ -14,7 +14,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.camera import Camera  # Importieren Sie das Camera-Widget
+from kivy.uix.camera import Camera  
 from kivy.graphics import Color, Ellipse
 
 from plyer import gps
@@ -23,7 +23,7 @@ from datetime import datetime
 import sqlite3
 import dbscript
 
-# Definieren der Screens
+
 class StartScreen(Screen):
     def on_enter(self):
         # Wechsel nach 2 Sekunden zum Main-Screen
@@ -96,7 +96,7 @@ class StellplatzScreen(Screen):
 
         finally:
             if conn:
-                conn.close()  # Stelle sicher, dass `conn` nur geschlossen wird, wenn es korrekt initialisiert wurde
+                conn.close()  
 
 
 
@@ -261,7 +261,7 @@ class MyApp(App):
     def add_more_options(self, text, checkbox_list, popup):
         if text.strip():
             checkbox_label = Label(text=text, color=(0, 0, 0, 1), size_hint=(None, None), size=(200, 50), halign='center', valign='middle')
-            checkbox_label.bind(size=checkbox_label.setter('text_size'))  # Ensure text is centered
+            checkbox_label.bind(size=checkbox_label.setter('text_size'))  
             checkbox = CheckBox(size_hint=(None, None), size=(50, 50))
 
             new_layout = BoxLayout(size_hint_y=None, height=50)

@@ -4,7 +4,7 @@ from kivy.uix.camera import Camera
 from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Ellipse, Color
-from kivy.clock import Clock  # Clock importieren für zeitgesteuerte Ereignisse
+from kivy.clock import Clock  
 
 class CameraScreen(Screen):
     def __init__(self, **kwargs):
