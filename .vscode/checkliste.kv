@@ -28,12 +28,6 @@
             halign: 'center'
             valign: 'middle'
             text_size: self.size
-            
-
-        # Platzhalter-Widget für Abstand
-        #Widget:
-        #    size_hint_y: None
-        #    height: 20
 
         ScrollView:
             size_hint: (1, None)
@@ -89,8 +83,6 @@
         Widget:
             size_hint_y: None
             height: 20
-            color: 0, 0, 0, 1 # Schwarze Textfarbe 
-            spacing: 10
 
         BoxLayout:
             orientation: 'horizontal'
@@ -111,4 +103,4 @@
                 font_size: 32
                 size_hint: (0.5, None)
                 height: 50
-                on_press: root.speichern_in_db(checkbox_list)
+                on_press: root.speichern_in_db()

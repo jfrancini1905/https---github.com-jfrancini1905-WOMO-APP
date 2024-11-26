@@ -20,7 +20,7 @@ from kivy.graphics import Color, Ellipse
 from plyer import gps
 import os
 from datetime import datetime
-
+import sqlite3
 import dbscript
 
 # Definieren der Screens
@@ -42,6 +42,7 @@ class StellplatzScreen(Screen):
         longitude = kwargs.get('lon', 'Unbekannt')
         self.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
         gps.stop()  
+        
 
     def get_current_location(self, *args):
         try:
@@ -60,24 +61,44 @@ class StellplatzScreen(Screen):
              self.ids.GPS_Koordinaten.text = "GPS deaktiviert."
 
     def speichern_in_db(self, checkbox_list):
+        app = App.get_running_app()  # Zugriff auf die Instanz der App
+        conn = None  # `conn` hier initialisieren, um es später sicher zu verwenden
+
         try:
+            # Checkbox Zustände abfragen
             checkbox_states = app.get_checkbox_states(checkbox_list)
+            # Bezeichnung und GPS Koordinaten holen
             bezeichnung = self.ids.Bezeichnung.text.strip()
-            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()     
+            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()
+
+            # Sicherstellen, dass die Daten vorhanden sind
+            if not bezeichnung:
+                raise ValueError("Bezeichnung darf nicht leer sein.")
+            if not gps_koordinaten:
+                raise ValueError("GPS-Koordinaten dürfen nicht leer sein.")
+
+            print(f"Bezeichnung: {bezeichnung}, GPS: {gps_koordinaten}, Checkbox-Status: {checkbox_states}")
+
+            # Datenbank eintrag vorbereiten
             entries = "entries.db"
             conn = dbscript.create_connection(entries)
 
             if conn:
                 dbscript.add_entry(conn, bezeichnung, gps_koordinaten, checkbox_states)
                 app.show_success_popup()  # Popup anzeigen
-            else:   
+            else:
                 app.show_error_popup("Fehler bei Verbindung mit der Datenbank")
-                
+
         except Exception as e:
+            # Fehlerausgabe
+            print(f"Fehler: {e}")
             app.show_error_popup("Fehler beim Speichern: " + str(e))
+
         finally:
             if conn:
-                conn.close()
+                conn.close()  # Stelle sicher, dass `conn` nur geschlossen wird, wenn es korrekt initialisiert wurde
+
+
 
 class ChecklistScreen(Screen):
     pass
@@ -230,80 +251,47 @@ class MyApp(App):
         popup = Popup(
             title="Neue Option hinzufügen",
             content=popup_layout,
-            size_hint=(0.8, 0.4),  
-            auto_dismiss=False  
+            size_hint=(0.8, 0.4),
+            auto_dismiss=False
         )
 
         popup.open()
 
-    def add_more_options(self, label_text, checkbox_list, popup):
-        if not label_text.strip():
-            label_text = f"Option {len(checkbox_list.children) + 1}"
 
-        new_option = BoxLayout(
-            orientation='horizontal',
-            size_hint_y=None,
-            height=50,
-            spacing=10
-        )
-        # Checkbox und Label hinzufügen
-        new_label = Label(text=label_text, font_size=32, color=(0, 0, 0, 1)) #Schwarze Textfarbe 
-        new_checkbox = CheckBox()
-        new_option.add_widget(new_label)
-        new_option.add_widget(new_checkbox)
-        checkbox_list.add_widget(new_option)
-        popup.dismiss()
+    def add_more_options(self, text, checkbox_list, popup):
+        if text.strip():
+            checkbox_label = Label(text=text, color=(0, 0, 0, 1), size_hint=(None, None), size=(200, 50), halign='center', valign='middle')
+            checkbox_label.bind(size=checkbox_label.setter('text_size'))  # Ensure text is centered
+            checkbox = CheckBox(size_hint=(None, None), size=(50, 50))
+
+            new_layout = BoxLayout(size_hint_y=None, height=50)
+            new_layout.add_widget(checkbox_label)
+            new_layout.add_widget(checkbox)
+            checkbox_list.add_widget(new_layout)
+            popup.dismiss()
+        else:
+            self.show_error_popup("Text darf nicht leer sein.")
+
+
+    def show_error_popup(self, message):
+        popup = Popup(title="Fehler", content=Label(text=message), size_hint=(None, None), size=(400, 200))
+        popup.open()
+
+    def show_success_popup(self):
+        popup = Popup(title="Erfolg", content=Label(text="Daten erfolgreich gespeichert!"), size_hint=(None, None), size=(400, 200))
+        popup.open()
 
     def get_checkbox_states(self, checkbox_list):
         states = {}
         for item in checkbox_list.children:
             if isinstance(item, BoxLayout):
-                label = item.children[0]     # Label ist das erste Kind im Layout
-                checkbox = item.children[1]  # Checkbox ist das zweite Kind im Layout
+                label = item.children[1]  # Label ist das zweite Kind im Layout
+                checkbox = item.children[0]  # Checkbox ist das erste Kind im Layout
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
                     states[label.text] = checkbox.active
+        print(f"Checkbox-Stände: {states}")
         return states
-    
-    def show_success_popup(self):
-        # Popup-Inhalt
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
 
-        message = Label(text="Daten wurden erfolgreich gespeichert!", halign='center')
-        content.add_widget(message)
-
-        close_button = Button(text="OK", size_hint=(1, 0.5))
-        content.add_widget(close_button)
-
-        popup = Popup(
-            title="Erfolg",
-            content=content,
-            size_hint=(0.7, 0.4),  
-            auto_dismiss=False 
-        )
-        close_button.bind(on_release=popup.dismiss)
-        popup.open()
-
-    def show_error_popup(self, error_message="Ein Fehler ist aufgetreten."):
-        # Layout für den Popup-Inhalt
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
-
-        message = Label(text=f"[b]Fehler:[/b] {error_message}", markup=True, halign='center')
-        content.add_widget(message)
-
-        close_button = Button(text="OK", size_hint=(1, 0.5))
-        content.add_widget(close_button)
-
-        popup = Popup(
-            title="Speichern fehlgeschlagen",
-            content=content,
-            size_hint=(0.7, 0.4), 
-            auto_dismiss=False 
-        )
-
-        close_button.bind(on_release=popup.dismiss)
-
-        popup.open()
-
+# Run the app
 if __name__ == '__main__':
-    app = MyApp()
-    app.run()
+    MyApp().run()
