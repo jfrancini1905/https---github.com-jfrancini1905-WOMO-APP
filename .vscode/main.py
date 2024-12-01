@@ -12,19 +12,20 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
-from kivy.uix.layout import Layout
 from kivy.uix.image import Image
-from camera import CameraScreen
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.checkbox import CheckBox
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.camera import Camera  
+from kivy.graphics import Color, Ellipse
 
+from plyer import gps
+import os
+from datetime import datetime
+import sqlite3
 import dbscript
 
-# Definieren der Screens
+
 class StartScreen(Screen):
     def on_enter(self):
         # Wechsel nach 2 Sekunden zum Main-Screen
@@ -41,26 +42,31 @@ class StellplatzScreen(Screen):
         # Standortdaten verarbeiten und anzeigen
         latitude = kwargs.get('lat', 'Unbekannt')
         longitude = kwargs.get('lon', 'Unbekannt')
-        self.root.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
+        self.ids.GPS_Koordinaten.text = f"Breite: {latitude}, Länge: {longitude}"
         gps.stop()  
+        
+
     def get_current_location(self, *args):
         try:
             # GPS-Daten abrufen
             gps.configure(on_location=self.on_location, on_status=self.on_status)
             gps.start()
-            self.ids.get('GPS_Koordinaten', None).text = "GPS wird abgerufen..."
+            self.ids.GPS_Koordinaten.text = "GPS wird abgerufen..."
         except NotImplementedError:
-            self.ids.get('GPS_Koordinaten', None).text = "GPS wird auf diesem Gerät nicht unterstützt."
+            self.ids.GPS_Koordinaten.text = "GPS wird auf diesem Gerät nicht unterstützt."
 
     def on_status(self, stype, status):
         # Statusmeldung (z. B. Fehler oder Erfolg)
         if stype == "provider-enabled":
-             self.ids.get('GPS_Koordinaten', None).text = "GPS aktiviert."
+             self.ids.GPS_Koordinaten.text = "GPS aktiviert."
         elif stype == "provider-disabled":
              self.ids.get('GPS_Koordinaten', None).text = "GPS deaktiviert."
     
     
     def speichern_in_db(self, checkbox_list):
+        app = App.get_running_app()  # Zugriff auf die Instanz der App
+        conn = None  # `conn` hier initialisieren, um es später sicher zu verwenden
+
         try:
             # Checkbox-Status als JSON-String
             checkbox_states = app.get_checkbox_states(checkbox_list)
@@ -84,13 +90,20 @@ class StellplatzScreen(Screen):
                 app.show_success_popup()  # Popup anzeigen
             else:
                 app.show_error_popup("Fehler bei Verbindung mit der Datenbank")
+<<<<<<< HEAD
+=======
+
+>>>>>>> a4730903a4e4ef0b7b33ebad367c6e1f074b1e8d
         except Exception as e:
+            # Fehlerausgabe
+            print(f"Fehler: {e}")
             app.show_error_popup("Fehler beim Speichern: " + str(e))
+
         finally:
             if conn:
-                conn.close()
+                conn.close()  
 
-    
+
 
 class ChecklistScreen(Screen):
     pass
@@ -105,7 +118,85 @@ class StellplatzübersichtScreen(Screen):
     pass
 
 class CameraScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super(CameraScreen, self).__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical')
+
+        # Kamera-Widget
+        self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8))
+        layout.add_widget(self.camera)
+
+        # Button zum Aufnehmen eines Fotos
+        self.capture_button = Button(text="Foto aufnehmen", size_hint=(1, 0.2))
+        self.capture_button.bind(on_press=self.capture)
+        layout.add_widget(self.capture_button)
+
+        # Runder Button mit einem X, oben rechts platziert
+        close_button = Button(size_hint=(None, None), size=(50, 50),
+                              background_normal='', background_color=(1, 0, 0, 1),
+                              pos_hint={'right': 1, 'top': 1})
+        close_button.bind(on_press=self.go_back_to_stellplatz)
+        with close_button.canvas:
+            self.ellipse_color = Color(1, 1, 1, 1)
+            self.ellipse = Ellipse(pos=close_button.pos, size=close_button.size)
+            close_button.bind(pos=self.update_shape, size=self.update_shape)
+        layout.add_widget(close_button)
+
+        self.add_widget(layout)
+
+    def on_enter(self):
+        self.start_camera()
+
+    def update_shape(self, instance, value):
+        self.ellipse.pos = instance.pos
+        self.ellipse.size = instance.size
+
+    def start_camera(self):
+        # Die Kamera starten
+        self.camera.play = True
+
+    def capture(self, instance):
+        # Bild speichern
+        file_path = os.path.join(App.get_running_app().user_data_dir, f"IMG_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png")
+        self.camera.export_to_png(file_path)
+
+        # Galerie aktualisieren
+        self.manager.get_screen('gallery').update_gallery()
+
+        # Wechsel zur Galerie
+        self.manager.current = 'gallery'
+
+    def go_back_to_stellplatz(self, instance):
+        self.manager.current = 'stellplatz'
+
+class ImageGalleryScreen(Screen):
+    def __init__(self, **kwargs):
+        super(ImageGalleryScreen, self).__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical')
+
+        self.scroll_view = ScrollView()
+        self.grid_layout = GridLayout(cols=2, spacing=10, size_hint_y=None)
+        self.grid_layout.bind(minimum_height=self.grid_layout.setter('height'))
+
+        self.scroll_view.add_widget(self.grid_layout)
+        layout.add_widget(self.scroll_view)
+
+        self.add_widget(layout)
+
+    def on_enter(self):
+        self.update_gallery()
+
+    def update_gallery(self):
+        # Lösche vorhandene Widgets
+        self.grid_layout.clear_widgets()
+
+        # Lade die Bilder neu
+        image_dir = App.get_running_app().user_data_dir
+        for filename in os.listdir(image_dir):
+            if filename.endswith('.png'):
+                image_path = os.path.join(image_dir, filename)
+                img = Image(source=image_path, size_hint_y=None, height=200)
+                self.grid_layout.add_widget(img)
 
 class MyScreenManager(ScreenManager):
     pass
@@ -132,6 +223,7 @@ class MyApp(App):
         Builder.load_file("verwaltung.kv")  
         Builder.load_file("checkliste.kv") 
         Builder.load_file("uebersicht.kv") 
+
         sm = MyScreenManager()
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(MainScreen(name='main'))
@@ -141,6 +233,8 @@ class MyApp(App):
         sm.add_widget(ChecklistScreen(name='checkliste'))
         sm.add_widget(StellplatzübersichtScreen(name='uebersicht'))
         sm.add_widget(CameraScreen(name='camera'))
+        sm.add_widget(ImageGalleryScreen(name='gallery'))  # Hinzufügen der Galerie
+
         return sm
 
     def show_popup(self, checkbox_list):
@@ -159,85 +253,50 @@ class MyApp(App):
         popup_layout.add_widget(text_input)
         popup_layout.add_widget(confirm_button)
 
-        
         popup = Popup(
             title="Neue Option hinzufügen",
             content=popup_layout,
-            size_hint=(0.8, 0.4),  
-            auto_dismiss=False  
+            size_hint=(0.8, 0.4),
+            auto_dismiss=False
         )
 
-        
         popup.open()
 
-    def add_more_options(self, label_text, checkbox_list, popup):
-        if not label_text.strip():
-            label_text = f"Option {len(checkbox_list.children) + 1}"
 
-        new_option = BoxLayout(
-            orientation='horizontal',
-            size_hint_y=None,
-            height=50,
-            spacing=10
-        )
-        # Checkbox und Label hinzufügen
-        new_label = Label(text=label_text, font_size=32, color=(0, 0, 0, 1)) #Schwarze Textfarbe 
-        new_checkbox = CheckBox()
-        new_label = Label(text=label_text, font_size=24)
-        new_option.add_widget(new_checkbox)
-        new_option.add_widget(new_label)
-        checkbox_list.add_widget(new_option)
-        popup.dismiss()
+    def add_more_options(self, text, checkbox_list, popup):
+        if text.strip():
+            checkbox_label = Label(text=text, color=(0, 0, 0, 1), size_hint=(None, None), size=(200, 50), halign='center', valign='middle')
+            checkbox_label.bind(size=checkbox_label.setter('text_size'))  
+            checkbox = CheckBox(size_hint=(None, None), size=(50, 50))
+
+            new_layout = BoxLayout(size_hint_y=None, height=50)
+            new_layout.add_widget(checkbox_label)
+            new_layout.add_widget(checkbox)
+            checkbox_list.add_widget(new_layout)
+            popup.dismiss()
+        else:
+            self.show_error_popup("Text darf nicht leer sein.")
+
+
+    def show_error_popup(self, message):
+        popup = Popup(title="Fehler", content=Label(text=message), size_hint=(None, None), size=(400, 200))
+        popup.open()
+
+    def show_success_popup(self):
+        popup = Popup(title="Erfolg", content=Label(text="Daten erfolgreich gespeichert!"), size_hint=(None, None), size=(400, 200))
+        popup.open()
+
     def get_checkbox_states(self, checkbox_list):
         states = {}
         for item in checkbox_list.children:
             if isinstance(item, BoxLayout):
-                checkbox = item.children[0]  # Checkbox ist das zweite Kind im Layout
-                label = item.children[1]     # Label ist das erste Kind im Layout
+                label = item.children[1]  # Label ist das zweite Kind im Layout
+                checkbox = item.children[0]  # Checkbox ist das erste Kind im Layout
                 if isinstance(checkbox, CheckBox) and isinstance(label, Label):
                     states[label.text] = checkbox.active
+        print(f"Checkbox-Stände: {states}")
         return states
-    
-    def show_success_popup(self):
-        # Popup-Inhalt
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
 
-        message = Label(text="Daten wurden erfolgreich gespeichert!", halign='center')
-        content.add_widget(message)
-
-        close_button = Button(text="OK", size_hint=(1, 0.5))
-        content.add_widget(close_button)
-
-        popup = Popup(
-            title="Erfolg",
-            content=content,
-            size_hint=(0.7, 0.4),  
-            auto_dismiss=False 
-        )
-        close_button.bind(on_release=popup.dismiss)
-        popup.open()
-
-    def show_error_popup(self, error_message="Ein Fehler ist aufgetreten."):
-        # Layout für den Popup-Inhalt
-        content = BoxLayout(orientation='vertical', spacing=10, padding=10)
-
-        message = Label(text=f"[b]Fehler:[/b] {error_message}", markup=True, halign='center')
-        content.add_widget(message)
-
-        close_button = Button(text="OK", size_hint=(1, 0.5))
-        content.add_widget(close_button)
-
-        popup = Popup(
-            title="Speichern fehlgeschlagen",
-            content=content,
-            size_hint=(0.7, 0.4), 
-            auto_dismiss=False 
-        )
-
-        close_button.bind(on_release=popup.dismiss)
-
-        popup.open()
-
+# Run the app
 if __name__ == '__main__':
-    app = MyApp()
-    app.run()
+    MyApp().run()
