@@ -1,6 +1,7 @@
 import kivy
 kivy.parse_kivy_version('1.11.0')
 import plyer
+import json
 from plyer import gps
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -57,20 +58,32 @@ class StellplatzScreen(Screen):
              self.ids.get('GPS_Koordinaten', None).text = "GPS aktiviert."
         elif stype == "provider-disabled":
              self.ids.get('GPS_Koordinaten', None).text = "GPS deaktiviert."
+    
+    
     def speichern_in_db(self, checkbox_list):
         try:
+            # Checkbox-Status als JSON-String
             checkbox_states = app.get_checkbox_states(checkbox_list)
+            checkbox_states_str = json.dumps(checkbox_states)  # Konvertieren in JSON
+
+            # Eingabewerte überprüfen
             bezeichnung = self.ids.Bezeichnung.text.strip()
-            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()     
+            gps_koordinaten = self.ids.GPS_Koordinaten.text.strip()
+
+            if not bezeichnung or not gps_koordinaten:
+                app.show_error_popup("Bezeichnung oder GPS-Koordinaten dürfen nicht leer sein")
+                return
+
+            # Verbindung zur Datenbank herstellen
             entries = "entries.db"
             conn = dbscript.create_connection(entries)
 
             if conn:
-                dbscript.add_entry(conn, bezeichnung, gps_koordinaten, checkbox_states)
+                # Daten einfügen
+                dbscript.add_entry(conn, bezeichnung, gps_koordinaten, checkbox_states_str)
                 app.show_success_popup()  # Popup anzeigen
-            else:   
+            else:
                 app.show_error_popup("Fehler bei Verbindung mit der Datenbank")
-                
         except Exception as e:
             app.show_error_popup("Fehler beim Speichern: " + str(e))
         finally:

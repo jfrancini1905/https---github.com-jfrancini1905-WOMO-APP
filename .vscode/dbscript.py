@@ -22,9 +22,10 @@ def create_table(conn):
 
 # Eintrag hinzufügen
 def add_entry(conn, title, location, checklist):
-    query = f"INSERT INTO entries (title, location, checklist) VALUES ({title}, {location}, {checklist} );"
+    query = "INSERT INTO entries (title, location, checklist) VALUES (?, ?, ?);"
     conn.execute(query, (title, location, checklist))
     conn.commit()
+
    
 
 def get_entry_by_id(conn, entry_id):
