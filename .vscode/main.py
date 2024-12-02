@@ -90,10 +90,9 @@ class StellplatzScreen(Screen):
                 app.show_success_popup()  # Popup anzeigen
             else:
                 app.show_error_popup("Fehler bei Verbindung mit der Datenbank")
-<<<<<<< HEAD
-=======
 
->>>>>>> a4730903a4e4ef0b7b33ebad367c6e1f074b1e8d
+
+
         except Exception as e:
             # Fehlerausgabe
             print(f"Fehler: {e}")
