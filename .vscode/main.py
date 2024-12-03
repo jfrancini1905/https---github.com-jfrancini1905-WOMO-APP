@@ -90,10 +90,6 @@ class StellplatzScreen(Screen):
                 app.show_success_popup()  # Popup anzeigen
             else:
                 app.show_error_popup("Fehler bei Verbindung mit der Datenbank")
-<<<<<<< HEAD
-=======
-
->>>>>>> a4730903a4e4ef0b7b33ebad367c6e1f074b1e8d
         except Exception as e:
             # Fehlerausgabe
             print(f"Fehler: {e}")
@@ -123,8 +119,8 @@ class CameraScreen(Screen):
         layout = BoxLayout(orientation='vertical')
 
         # Kamera-Widget
-        self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8))
-        layout.add_widget(self.camera)
+        #self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8))
+        #layout.add_widget(self.camera)
 
         # Button zum Aufnehmen eines Fotos
         self.capture_button = Button(text="Foto aufnehmen", size_hint=(1, 0.2))
