@@ -1,10 +1,8 @@
 from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.camera import Camera
 from kivy.uix.button import Button
-from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Ellipse, Color
-from kivy.clock import Clock  
 
 class CameraScreen(Screen):
     def __init__(self, **kwargs):
@@ -12,11 +10,11 @@ class CameraScreen(Screen):
         layout = FloatLayout()
 
         # Kamera erstellen, aber noch nicht starten
-        self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8), pos_hint={'x': 0, 'y': 0.2})
+        self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8), pos_hint={'center_x': 0.5, 'center_y': 0.6})
         layout.add_widget(self.camera)
 
         # Capture Button
-        capture_button = Button(text="Foto", size_hint=(1, 0.2), pos_hint={'x': 0, 'y': 0})
+        capture_button = Button(text="Foto", size_hint=(1, 0.1), pos_hint={'center_x': 0.5, 'y': 0})
         capture_button.bind(on_press=self.capture)
         layout.add_widget(capture_button)
 
@@ -39,6 +37,10 @@ class CameraScreen(Screen):
         # Die Kamera starten, wenn der Bildschirm betreten wird
         self.start_camera()
 
+    def on_leave(self):
+        # Die Kamera stoppen, wenn der Bildschirm verlassen wird
+        self.stop_camera()
+
     def update_shape(self, instance, value):
         # Größe und Position des X im Close-Button aktualisieren
         self.ellipse.pos = instance.pos
@@ -49,15 +51,25 @@ class CameraScreen(Screen):
         self.camera.play = True
         print("Kamera gestartet")
 
+    def stop_camera(self):
+        # Die Kamera stoppen
+        self.camera.play = False
+        print("Kamera gestoppt")
+
     def capture(self, instance):
         # Foto aufnehmen und speichern
         self.camera.export_to_png("Foto_image.png")
         print("Foto aufgenommen")
 
     def go_back_to_stellplatz(self, instance):
-        # Stoppen der Kamera und Wechsel zum Stellplatz-Screen
-        self.camera.play = False
-        print("Kamera gestoppt")
+        # Debug-Ausgabe, um sicherzustellen, dass die Methode aufgerufen wird
+        print("Zurück-Button gedrückt")
+        
+        # Stoppen der Kamera
+        self.stop_camera()
+        
+        # Debug-Ausgabe, um den aktuellen Bildschirm anzuzeigen
+        print("Wechsel zum 'stellplatz' Bildschirm")
         
         # Bildschirm wechseln
         self.manager.current = 'stellplatz'
