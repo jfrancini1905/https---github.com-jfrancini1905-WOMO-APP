@@ -122,8 +122,8 @@ class CameraScreen(Screen):
         layout = BoxLayout(orientation='vertical')
 
         # Kamera-Widget
-        #self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8))
-        #layout.add_widget(self.camera)
+        self.camera = Camera(resolution=(640, 480), size_hint=(1, 0.8))
+        layout.add_widget(self.camera)
 
         # Button zum Aufnehmen eines Fotos
         self.capture_button = Button(text="Foto aufnehmen", size_hint=(1, 0.2))

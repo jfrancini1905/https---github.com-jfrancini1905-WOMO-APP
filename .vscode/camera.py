@@ -3,6 +3,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.camera import Camera
 from kivy.uix.button import Button
 from kivy.graphics import Ellipse, Color
+from kivy.app import App
+import os
 
 class CameraScreen(Screen):
     def __init__(self, **kwargs):
@@ -23,13 +25,18 @@ class CameraScreen(Screen):
                               background_normal='', background_color=(1, 0, 0, 1),
                               pos_hint={'right': 1, 'top': 1})
         close_button.bind(on_press=self.go_back_to_stellplatz)
-        
+
         # Runder Button mit X (wir zeichnen ein X auf den Button)
         with close_button.canvas:
             self.ellipse_color = Color(1, 1, 1, 1)  # Weißes X
             self.ellipse = Ellipse(pos=close_button.pos, size=close_button.size)
             close_button.bind(pos=self.update_shape, size=self.update_shape)
         layout.add_widget(close_button)
+
+        # Zurück-Button, unten links
+        back_button = Button(text='zurück', size_hint=(None, None), size=(150, 50), pos_hint={'x': 0, 'y': 0})
+        back_button.bind(on_press=self.go_back_to_stellplatz)
+        layout.add_widget(back_button)
 
         self.add_widget(layout)
 
@@ -58,18 +65,17 @@ class CameraScreen(Screen):
 
     def capture(self, instance):
         # Foto aufnehmen und speichern
-        self.camera.export_to_png("Foto_image.png")
-        print("Foto aufgenommen")
+        image_path = os.path.join("Fotos", "Foto_image.png")
+        self.camera.export_to_png(image_path)
+        print("Foto aufgenommen und gespeichert:", image_path)
+
+        # Bilderliste aktualisieren
+        app = App.get_running_app()
+        app.add_image_to_gallery(image_path)
 
     def go_back_to_stellplatz(self, instance):
-        # Debug-Ausgabe, um sicherzustellen, dass die Methode aufgerufen wird
-        print("Zurück-Button gedrückt")
-        
-        # Stoppen der Kamera
+        # Kamera stoppen
         self.stop_camera()
-        
-        # Debug-Ausgabe, um den aktuellen Bildschirm anzuzeigen
-        print("Wechsel zum 'stellplatz' Bildschirm")
         
         # Bildschirm wechseln
         self.manager.current = 'stellplatz'

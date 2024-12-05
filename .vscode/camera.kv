@@ -1,4 +1,9 @@
 #:kivy 1.11.0
+
+ScreenManager:
+    CameraScreen:
+    StellplatzScreen:
+
 <CameraScreen>:
     BoxLayout:
         orientation: 'vertical'
@@ -14,7 +19,6 @@
                 pos: self.pos
                 size: self.size
 
-        # ScrollView wird hier verwendet, falls zukünftige Widgets hinzugefügt werden
         CustomScrollView:
             BoxLayout:
                 orientation: 'vertical'
@@ -26,5 +30,4 @@
                     font_size: 24
                     size_hint_y: None
                     height: 50
-                    on_press: app.root.current = 'stellplatz'
-
+                    on_press: root.go_back_to_stellplatz  # Ruft die Methode zum Wechseln des Bildschirms auf
